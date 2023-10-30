@@ -1,13 +1,29 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View, BackHandler } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { setRegistrationInfo, setSavedImage } from "../../../Redux/navSlice";
 
 const Thankyou = () => {
-  const [countdown, setCountdown] = useState(15);
+  const [countdown, setCountdown] = useState(25);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const backAction = () => {
+      navigation.navigate("DriverLogin");
+
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   useEffect(() => {
     const redirectTimer = setInterval(() => {
       dispatch(setRegistrationInfo(null));
@@ -55,15 +71,10 @@ const Thankyou = () => {
       <Text style={{ textAlign: "center", paddingHorizontal: 20 }}>
         will have full access to all the features our app has to offer. We thank
         you for your patience during this verification process and look forward
-        to having you as a trusted member of the Angkas Atad driver community.
+        to having you as a trusted member of the Angkas Atad - Ride Along Driver
+        community.
       </Text>
-      <Text
-        style={{ textAlign: "center", marginTop: 15, paddingHorizontal: 20 }}
-      >
-        To log in, we've sent you an email to confirm your ownership of the
-        DHVSU email account. Please check your inbox and open the link and click
-        YES. Safe driving!
-      </Text>
+
       <View
         style={{ flexDirection: "row", alignItems: "center", marginTop: 70 }}
       >

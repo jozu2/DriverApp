@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ActivityIndicator,
   ScrollView,
 } from "react-native";
 import React, { useState } from "react";
@@ -23,6 +24,7 @@ import { firebase } from "./../../../../config";
 const Registration3 = () => {
   const [isChecked, setChecked] = useState(false);
   const [showModalTerms, setShowModalTerms] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
   const regInfo = useSelector(selectRegistrationInfo);
   const ImageData = useSelector(selectSavedImage);
@@ -98,15 +100,16 @@ const Registration3 = () => {
           dateCreated,
           imageUrl,
         });
-
       Alert.alert("Success!", "We sent you an email for a confirmation link");
       navigation.navigate("ThankYou");
     } catch (error) {
+      setIsLoading(false);
       alert("Registration and image upload failed: " + error.message);
     }
   };
 
   console.log(regInfo);
+
   return (
     <View
       style={{
@@ -116,6 +119,36 @@ const Registration3 = () => {
         padding: 30,
       }}
     >
+      {isLoading && (
+        <View
+          style={{
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 10,
+            backgroundColor: "rgba(0, 0, 0, 0.12)",
+            position: "absolute",
+            alignContent: "center",
+            justifyContent: "center",
+            paddingTop: 140,
+            paddingBottom: 110,
+          }}
+        >
+          <View
+            style={{
+              width: 200,
+              height: 200,
+              justifyContent: "center",
+              alignSelf: "center",
+              borderRadius: 20,
+              backgroundColor: "#fff",
+            }}
+          >
+            <ActivityIndicator size={70} color="gray" />
+          </View>
+        </View>
+      )}
       {showModalTerms && (
         <View
           style={{
@@ -220,7 +253,7 @@ const Registration3 = () => {
       />
       <Text style={styles.title}>Register</Text>
       <Text style={styles.sub}>Attach a photo of your license ID</Text>
-      {ImageData.uri !== null ? (
+      {ImageData !== null ? (
         <Image
           source={{ uri: ImageData }}
           style={{
@@ -248,7 +281,7 @@ const Registration3 = () => {
         }}
       >
         <Text style={{ fontSize: 20, textAlign: "center", color: "#fff" }}>
-          {ImageData.uri !== null ? "Retake Photo" : "Take Photo"}
+          {ImageData !== null ? "Retake Photo" : "Take Photo"}
         </Text>
       </TouchableOpacity>
 
@@ -283,7 +316,7 @@ const Registration3 = () => {
         disabled={!isChecked}
         style={[styles.Next, { backgroundColor: isChecked ? "gray" : "white" }]}
         onPress={() => {
-          if (ImageData.uri === null) {
+          if (ImageData === null) {
             Alert.alert("No Image Found", "Please attach your liscense ID");
             return;
           }
@@ -294,6 +327,8 @@ const Registration3 = () => {
             );
             return;
           }
+
+          setIsLoading(true);
           registerDriver(
             regInfo.emailAdd,
             regInfo.pass,

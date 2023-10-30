@@ -11,11 +11,7 @@ const initialState = {
     teacherID: null,
   },
 
-  savedImage: {
-    height: null,
-    uri: null,
-    width: null,
-  },
+  savedImage: null,
 
   origin: {
     latitude: null,

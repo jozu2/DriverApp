@@ -15,6 +15,7 @@ import { setUserProfile } from "../../Redux/navSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { Alert } from "react-native";
+import { ActivityIndicator } from "react-native";
 const DriverLogin = () => {
   const navigation = useNavigation();
   const [password, setPassword] = useState("");
@@ -22,6 +23,7 @@ const DriverLogin = () => {
   const dispatch = useDispatch();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [invalid, setInvalid] = useState(false);
+  const [isLoading, setIsloading] = useState(false);
 
   const validateEmail = (email) => {
     if (email.endsWith("@dhvsu.edu.ph")) {
@@ -33,6 +35,7 @@ const DriverLogin = () => {
       return false;
     }
   };
+
   useEffect(() => {
     if (invalid) {
       setTimeout(() => {
@@ -64,6 +67,7 @@ const DriverLogin = () => {
 
           console.log(userData);
         } else {
+          setIsloading(false);
           alert("Please log in your Driver Account");
         }
       } else {
@@ -71,13 +75,41 @@ const DriverLogin = () => {
           handleCodeInApp: true,
           url: "https://aa-ride-along.firebaseapp.com",
         });
+        setIsloading(false);
         alert("Please verify your email before proceeding.");
         await firebase.auth().signOut();
       }
     } catch (error) {
+      setIsloading(false);
       console.error("Login error:", error);
       alert("Invalid Email/Password");
       setInvalid(true);
+    }
+  };
+
+  const handleResetPassword = async () => {
+    setIsloading(true);
+
+    try {
+      if (!email) {
+        setIsloading(false);
+        return;
+      }
+      if (!validateEmail(email)) {
+        setIsloading(false);
+        return;
+      }
+      await firebase.auth().sendPasswordResetEmail(email);
+      Alert.alert(
+        "Password Reset Email Sent",
+        "Check your email to reset your password."
+      );
+      setIsloading(false);
+    } catch (error) {
+      setIsloading(false);
+
+      console.error("Password Reset Failed", error);
+      Alert.alert("Password Reset Failed", error.message);
     }
   };
   return (
@@ -89,6 +121,36 @@ const DriverLogin = () => {
         padding: 30,
       }}
     >
+      {isLoading && (
+        <View
+          style={{
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 10,
+            backgroundColor: "rgba(0, 0, 0, 0.12)",
+            position: "absolute",
+            alignContent: "center",
+            justifyContent: "center",
+            paddingTop: 140,
+            paddingBottom: 110,
+          }}
+        >
+          <View
+            style={{
+              width: 200,
+              height: 200,
+              justifyContent: "center",
+              alignSelf: "center",
+              borderRadius: 20,
+              backgroundColor: "#fff",
+            }}
+          >
+            <ActivityIndicator size={70} color="gray" />
+          </View>
+        </View>
+      )}
       <Image
         source={require("./../../assets/Icon.png")}
         style={{
@@ -133,6 +195,7 @@ const DriverLogin = () => {
         />
       </View>
       <TouchableOpacity
+        onPress={handleResetPassword}
         style={{ alignSelf: "flex-end", marginRight: 20, marginTop: -10 }}
       >
         <Text>Forgot Password</Text>
@@ -155,6 +218,7 @@ const DriverLogin = () => {
           if (!validateEmail(email)) {
             return;
           }
+          setIsloading(true);
           loginDriver(email, password);
         }}
       >
