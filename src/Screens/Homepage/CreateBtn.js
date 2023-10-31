@@ -13,12 +13,14 @@ import * as Location from "expo-location";
 import { useRef, useState, useEffect } from "react";
 import MapView from "react-native-maps";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useSelector } from "react-redux";
+import { selectUserProfile } from "../../Redux/navSlice";
 
 const CreateBtn = () => {
   const navigation = useNavigation();
   const mapRef = useRef(null);
   const [location, setLocation] = useState(null);
-
+  const driverData = useSelector(selectUserProfile);
   const [activeIndicator, setActiveIndicator] = useState(false);
 
   useEffect(() => {
@@ -55,6 +57,15 @@ const CreateBtn = () => {
   };
   const handleCreateRide = async () => {
     setActiveIndicator(true);
+    if (!driverData.info.isVerified) {
+      setActiveIndicator(false);
+      Alert.alert(
+        "Sorry!",
+        "You cannot create a ride at this time as your account is currently under review."
+      );
+
+      return;
+    }
     try {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
@@ -151,10 +162,19 @@ const CreateBtn = () => {
           <View style={styles.wl3}></View>
           <View style={styles.wl4}></View>
           <AntDesign name="plus" color={"gray"} size={80} style={styles.Icon} />
-
-          <Text>CREATE A RIDE</Text>
         </TouchableOpacity>
       )}
+      <Text
+        style={{
+          fontSize: 30,
+          fontWeight: "500",
+          textAlign: "center",
+          color: "#909090",
+          marginTop: 15,
+        }}
+      >
+        {activeIndicator ? "Loading . . ." : "CREATE A RIDE"}
+      </Text>
     </View>
   );
 };
@@ -163,7 +183,8 @@ export default CreateBtn;
 
 const styles = StyleSheet.create({
   wl: {
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#313133",
+
     width: 200,
     height: 20,
     bottom: -10,
@@ -172,7 +193,8 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   wl2: {
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#313133",
+
     width: 200,
     height: 20,
     top: -10,
@@ -181,7 +203,8 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   wl3: {
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#313133",
+
     width: 20,
     height: 200,
     top: 40,
@@ -192,7 +215,8 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   wl4: {
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#313133",
+
     width: 20,
     height: 200,
     top: 40,
@@ -208,11 +232,11 @@ const styles = StyleSheet.create({
     height: 280,
     borderRadius: 25,
     borderWidth: 5,
-    borderColor: "gray",
+    borderColor: "#ebebeb",
     backgroundColor: "transparent",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: "20%",
+    marginBottom: "15%",
   },
 });

@@ -5,6 +5,7 @@ import DriverDashboard from "../Screens/Homepage/DriverDashboard";
 import CustomDrawer from "../component/CustomDrawer";
 import Feather from "react-native-vector-icons/Feather";
 import Settings from "../Screens/Settings/index";
+import DriverProfile from "../Screens/DriverProfile/DriverProfile";
 
 const Drawer = () => {
   const DrawerNavigator = createDrawerNavigator();
@@ -29,6 +30,16 @@ const Drawer = () => {
               <Feather name="home" size={22} color={color} />
             ),
             drawerLabel: "Home",
+          }}
+        />
+        <DrawerNavigator.Screen
+          name="DriverProfile"
+          component={DriverProfile}
+          options={{
+            drawerIcon: ({ color }) => (
+              <Feather name="user" size={22} color={color} />
+            ),
+            drawerLabel: "Profile",
           }}
         />
         <DrawerNavigator.Screen

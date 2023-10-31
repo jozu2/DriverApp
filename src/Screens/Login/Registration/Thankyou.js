@@ -60,7 +60,7 @@ const Thankyou = () => {
       <Text
         style={{ textAlign: "center", marginTop: 5, paddingHorizontal: 20 }}
       >
-        We appreciate your interest in joining the community.Your account is
+        We appreciate your interest in joining the community. Your account is
         currently under review, and we're working diligently to verify your
         information. Please allow up to a couple of hours for this process to be
         completed.

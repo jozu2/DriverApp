@@ -1,13 +1,9 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
-import { selectRegistrationInfo } from "../../../Redux/navSlice";
 
 const Registration4 = () => {
   const navigation = useNavigation();
-  const x = useSelector(selectRegistrationInfo);
-  console.log(x);
   return (
     <View
       style={{

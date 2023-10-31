@@ -74,8 +74,6 @@ const CreateARide = () => {
     }
   };
   useEffect(() => {
-    console.log("xxxx", waypointsArray);
-
     if (selectedVehicle === "Motorcycle") {
       setNumberOfPassenger("1");
     }

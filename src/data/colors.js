@@ -13,8 +13,6 @@ const colors = [
   { label: "Pink", value: "pink" },
   { label: "Beige", value: "beige" },
   { label: "Gold", value: "gold" },
-  { label: "Bronze", value: "bronze" },
-  // Add more colors as needed
 ];
 
 const vehicles = [

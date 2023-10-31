@@ -64,8 +64,6 @@ const DriverLogin = () => {
           );
 
           dispatch(setUserProfile({ info: userData, id: user.uid }));
-
-          console.log(userData);
         } else {
           setIsloading(false);
           alert("Please log in your Driver Account");
@@ -73,7 +71,7 @@ const DriverLogin = () => {
       } else {
         firebase.auth().currentUser.sendEmailVerification({
           handleCodeInApp: true,
-          url: "https://aa-ride-along.firebaseapp.com",
+          url: "https://v5angkas.firebaseapp.com",
         });
         setIsloading(false);
         alert("Please verify your email before proceeding.");

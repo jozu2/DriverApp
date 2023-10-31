@@ -6,6 +6,7 @@ const initialState = {
     emailAdd: null,
     mobileNo: null,
     pass: null,
+    gender: null,
     selectedFaculty: null,
     address: null,
     teacherID: null,
@@ -19,7 +20,7 @@ const initialState = {
     description: null,
     title: null,
   },
-  waypoints: [],
+  waypoints: { latitude: null, longitude: null },
   destination: {
     latitude: null,
     longitude: null,
@@ -32,7 +33,7 @@ const initialState = {
     description: null,
   },
   viewBookings: null,
-  userProfile: { info: null, id: null },
+  userProfile: null,
   createdRideInfo: {
     driverInfo: { fullName: null, driverId: null },
     origin: {

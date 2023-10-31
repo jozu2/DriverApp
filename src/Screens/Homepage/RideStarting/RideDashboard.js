@@ -1,3 +1,4 @@
+import MapView, { Marker, Polyline } from "react-native-maps";
 import {
   Image,
   Pressable,
@@ -6,13 +7,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
-import MapView, { Marker, Polyline } from "react-native-maps";
-import MapViewDirections from "react-native-maps-directions";
-import Entypo from "react-native-vector-icons/Entypo";
+import EvilIcons from "react-native-vector-icons/EvilIcons";
+
 import { removeLabels } from "./../../../data/mapStyle";
-import UserInfoBoxModal from "./UserInfoBoxModal";
-import moment, { now } from "moment-timezone";
+import Entypo from "react-native-vector-icons/Entypo";
+import Octicons from "react-native-vector-icons/Octicons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import React, { useEffect, useRef, useState } from "react";
+import MapViewDirections from "react-native-maps-directions";
+import ShowList from "./ShowList";
 const RideDashboard = ({
   driverInfo,
   origin,
@@ -22,274 +25,247 @@ const RideDashboard = ({
   request,
 }) => {
   const mapRef = useRef(null);
-  const [takeMarkerCoordinates, setTakeMarkerCoordinates] = useState({
-    coords: {
-      latitude: "",
-      longitude: "",
-      description: "",
-      numberOfPassenger: "",
-    },
-    userInfo: {
-      latitude: "",
-      longitude: "",
-      description: "",
-      numberOfPassenger: "",
-    },
-  });
-  const [requestData, setRequestData] = useState(request);
-  const [showBottomBox, setShowBottomBox] = useState(false);
-  const [minutes, setMinutes] = useState(null);
-  const [seconds, setSeconds] = useState(null);
-  function calculateTimeDifference(time1, time2) {
-    const time1Parts = time1.split(":");
-    const time2Parts = time2.split(":");
-
-    const date1 = new Date(
-      0,
-      0,
-      0,
-      time1Parts[0],
-      time1Parts[1],
-      time1Parts[2]
-    );
-    const date2 = new Date(
-      0,
-      0,
-      0,
-      time2Parts[0],
-      time2Parts[1],
-      time2Parts[2]
-    );
-
-    const timeDifferenceMs = date2 - date1;
-
-    const timeDifferenceMinutes = timeDifferenceMs / (1000 * 60);
-
-    return timeDifferenceMinutes;
-  }
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     const manilaTimeZone = "Asia/Manila";
-  //     const nowInManila = moment.tz(manilaTimeZone);
-  //     const timeCreated = nowInManila.format("HH:mm:ss");
-  //     const departureTime = status.departureTime;
-
-  //     const currentTime = timeCreated;
-  //     console.log(currentTime <= departureTime);
-  //     if (currentTime <= departureTime) {
-  //       const remainingMinutes = calculateTimeDifference(
-  //         currentTime,
-  //         departureTime
-  //       );
-  //       const totalSeconds = Math.round(remainingMinutes * 60);
-  //       const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
-  //       const seconds = String(totalSeconds % 60).padStart(2, "0");
-
-  //       setMinutes(minutes);
-  //       setSeconds(seconds);
-  //     } else {
-  //       console.log("Departure time has already passed.");
-  //       clearInterval(interval);
-  //     }
-  //   }, 1000); // Update every second (1000 milliseconds)
-
-  //   return () => clearInterval(interval);
-  // }, [status.departureTime]);
-
+  const [showList, setShowList] = useState(false);
   return (
-    <View style={{ width: "100%", height: "100%" }}>
-      <TouchableOpacity style={styles.mainBtn}>
-        <Text style={styles.mainBtn.numTxt}>{`${minutes}:${seconds}`}</Text>
-        <Text style={styles.mainBtn.txt}>Cancel</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.chatBtn}>
-        <Entypo name="chat" size={50} color={"red"} />
-      </TouchableOpacity>
-
-      {showBottomBox && requestData !== null && (
-        <Pressable
-          style={{
-            width: "100%",
-            backgroundColor: "transparent",
-            height: "80%",
-            position: "absolute",
-          }}
-          onPress={() => {
-            setShowBottomBox(false);
-          }}
-        ></Pressable>
-      )}
-      {showBottomBox && requestData !== null && (
-        <View
-          style={{
-            width: "98%",
-            backgroundColor: "green",
-            height: "20%",
-            position: "absolute",
-            alignSelf: "center",
-            top: "79%",
-            borderRadius: 12,
-          }}
-        >
-          <Image
-            source={require("./../../../assets/boy3.jpg")}
+    <View
+      style={{
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      {showList && (
+        <>
+          <ShowList request={request} />
+          <EvilIcons
             style={{
-              width: 140,
-              height: 140,
-              borderRadius: 200,
-              borderWidth: 3,
-              borderColor: "green",
-              bottom: 70,
-              left: 20,
+              position: "absolute",
+              zIndex: 30,
+              bottom: 30,
+              alignSelf: "center",
+              backgroundColor: "rgba(255, 255, 255, 0.1)",
+              padding: 9,
+              borderRadius: 30,
             }}
-          ></Image>
-          <TouchableOpacity
-            style={{ position: "absolute", top: 20, right: 20 }}
-          >
-            <Text>Accept</Text>
-          </TouchableOpacity>
-        </View>
+            name={"close"}
+            size={50}
+            color={"#ebebeb"}
+            onPress={() => setShowList(false)}
+          />
+        </>
       )}
-      <MapView
-        showsMyLocationButton={false}
-        showsUserLocation={true}
-        ref={mapRef}
+      <View
         style={{
-          width: "100%",
-          height: "100%",
-          zIndex: -2,
-        }}
-        region={{
-          latitude: origin.latitude,
-          longitude: origin.longitude,
-          latitudeDelta: 0.031,
-          longitudeDelta: 0.031,
+          width: "96%",
+          height: "60%",
+          backgroundColor: "#ebebeb",
+          alignSelf: "center",
+          borderRadius: 10,
+          marginTop: "15%",
         }}
       >
-        {Object.keys(requestData).map((key) => {
-          const marker = requestData[key];
-          return (
+        <View
+          style={{
+            width: "50%",
+            height: 60,
+            backgroundColor: "#696969",
+            borderRadius: 11,
+            borderTopEndRadius: 30,
+            borderBottomStartRadius: 30,
+            position: "absolute",
+            top: -30,
+            zIndex: 3,
+
+            alignSelf: "center",
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 22,
+              marginTop: 6,
+              color: "#fff",
+            }}
+          >
+            12:00
+          </Text>
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 14,
+              lineHeight: 14,
+              color: "#fff",
+            }}
+          >
+            Starting in...
+          </Text>
+        </View>
+        <View
+          style={{
+            position: "absolute",
+            zIndex: 10,
+            alignItems: "center",
+            top: "40%",
+            right: 15,
+          }}
+        >
+          <TouchableOpacity style={{ marginTop: 15 }}>
+            <MaterialCommunityIcons
+              name="clipboard-text"
+              size={50}
+              color={"#696969"}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={{ marginTop: 15 }}>
+            <Entypo name="chat" size={50} color={"#696969"} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ marginTop: 15 }}
+            onPress={() => {
+              setShowList(true);
+            }}
+          >
+            <Octicons name="list-ordered" size={47} color={"#696969"} />
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            borderWidth: 2,
+            borderRadius: 20,
+            borderColor: "transparent",
+          }}
+        >
+          <MapView
+            showsMyLocationButton={false}
+            showsUserLocation={false}
+            scrollEnabled={false}
+            zoomControlEnabled={false}
+            ref={mapRef}
+            customMapStyle={removeLabels}
+            style={{
+              width: "100%",
+              height: "100%",
+              zIndex: 2,
+            }}
+            region={{
+              latitude: origin.latitude,
+              longitude: origin.longitude,
+              latitudeDelta: 0.031,
+              longitudeDelta: 0.031,
+            }}
+          >
             <Marker
-              key={key}
+              style={{ width: 200, height: 200 }}
               coordinate={{
-                latitude: marker.requestCoordsInfo.latitude,
-                longitude: marker.requestCoordsInfo.longitude,
+                latitude: destinaton.latitude,
+                longitude: destinaton.longitude,
               }}
-              pinColor="red"
-              onPress={() => {
-                setTakeMarkerCoordinates({
-                  coords: {
-                    latitude: marker.requestCoordsInfo.latitude,
-                    longitude: marker.requestCoordsInfo.longitude,
-                    description: marker.requestCoordsInfo.description,
-                    numberOfPassenger:
-                      marker.requestCoordsInfo.numberOfPassenger,
-                  },
-                  userInfo: {
-                    fullName: marker.userInfo.fullName,
-                    userID: marker.userInfo.userID,
+            >
+              <Image
+                source={require("./../../../assets/iconDestination.png")}
+                style={{
+                  width: 40,
+                  height: 50,
+                  alignSelf: "center",
+                  position: "absolute",
+                  bottom: 0,
+                }}
+              />
+            </Marker>
+            <Marker
+              style={{ width: 200, height: 200 }}
+              coordinate={{
+                latitude: origin.latitude,
+                longitude: origin.longitude,
+              }}
+            >
+              <Image
+                source={require("./../../../assets/iconOrigin.png")}
+                style={{
+                  width: 40,
+                  height: 50,
+                  alignSelf: "center",
+                  position: "absolute",
+                  bottom: 0,
+                }}
+              />
+            </Marker>
+            <MapViewDirections
+              origin={{
+                latitude: origin.latitude,
+                longitude: origin.longitude,
+              }}
+              destination={{
+                latitude: destinaton.latitude,
+                longitude: destinaton.longitude,
+              }}
+              apikey="AIzaSyBVtjPXDhyI3n_xnDYYbX0lOK3zpNQg_1o"
+              strokeWidth={4}
+              strokeColor="red"
+              onReady={(result) => {
+                mapRef.current.fitToCoordinates(result.coordinates, {
+                  edgePadding: {
+                    top: 100,
+                    right: 100,
+                    bottom: 5,
+                    left: 5,
                   },
                 });
-                setShowBottomBox(true);
               }}
             />
-          );
-        })}
-
-        <Marker
-          style={{ width: 200, height: 200 }}
-          coordinate={{
-            latitude: origin.latitude,
-            longitude: origin.longitude,
+          </MapView>
+        </View>
+        <Text
+          style={{ fontSize: 22, color: "#fff", marginTop: 15, marginLeft: 20 }}
+        >
+          {`  Accepted Users: ${vehicle.SeatOccupied}/${vehicle.seatCapacity}`}
+        </Text>
+        <View
+          style={{
+            width: "100%",
+            height: 70,
+            marginTop: 5,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "flex-start",
           }}
         >
-          <Image
-            source={require("./../../../assets/iconOrigin.png")}
+          <TouchableOpacity
             style={{
-              width: 40,
-              height: 50,
-              alignSelf: "center",
-              position: "absolute",
-              bottom: 0,
+              height: 60,
+              borderWidth: 2,
+              borderColor: "#ebebeb",
+              width: 60,
+              backgroundColor: "#696969",
+              borderRadius: 100,
+              marginLeft: 10,
             }}
-          />
-        </Marker>
-        <Marker
-          style={{ width: 200, height: 200 }}
-          coordinate={{
-            latitude: destinaton.latitude,
-            longitude: destinaton.longitude,
+          ></TouchableOpacity>
+        </View>
+        <TouchableOpacity
+          style={{
+            width: "30%",
+            backgroundColor: "#a81421",
+            borderRadius: 30,
+            alignSelf: "flex-end",
+            marginRight: 20,
+            marginTop: 20,
           }}
         >
-          <Image
-            source={require("./../../../assets/iconDestination.png")}
+          <Text
             style={{
-              width: 40,
-              height: 50,
-              alignSelf: "center",
-              position: "absolute",
-              bottom: 0,
+              fontSize: 18,
+              textAlign: "center",
+              color: "#ebebeb",
+              paddingVertical: 12,
+              fontWeight: "bold",
             }}
-          />
-        </Marker>
-        <MapViewDirections
-          origin={{
-            latitude: origin.latitude,
-            longitude: origin.longitude,
-          }}
-          destination={{
-            latitude: destinaton.latitude,
-            longitude: destinaton.longitude,
-          }}
-          waypoints={[
-            {
-              latitude: 14.966953,
-              longitude: 120.632592,
-            },
-            { latitude: 14.9840084, longitude: 120.6208341 },
-          ]}
-          apikey="AIzaSyBVtjPXDhyI3n_xnDYYbX0lOK3zpNQg_1o"
-          strokeWidth={4}
-          strokeColor="red"
-          onReady={(result) => {
-            mapRef.current.fitToCoordinates(result.coordinates, {
-              edgePadding: {
-                top: 60,
-                right: 5,
-                bottom: 130,
-                left: 5,
-              },
-            });
-          }}
-        />
-      </MapView>
+          >
+            Cancel
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 export default RideDashboard;
-
-const styles = StyleSheet.create({
-  chatBtn: { position: "absolute", top: 130, right: 25 },
-  mainBtn: {
-    backgroundColor: "red",
-    position: "absolute",
-    alignSelf: "flex-end",
-    paddingVertical: 7,
-    paddingHorizontal: 35,
-    borderRadius: 12,
-    top: 50,
-    right: 10,
-    txt: {
-      textAlign: "center",
-      fontSize: 15,
-      lineHeight: 15,
-    },
-    numTxt: {
-      fontSize: 20,
-      textAlign: "center",
-    },
-  },
-});

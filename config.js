@@ -5,15 +5,15 @@ import { getDatabase } from "firebase/database";
 import "firebase/compat/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC1scVQ9PJGU3lw1zN_KmuYfSAed4Zw4dg",
-  authDomain: "aa-ride-along.firebaseapp.com",
+  apiKey: "AIzaSyAkFCgeMiNZk9zV9S05xO00Ol3rEtfcqwk",
+  authDomain: "v5angkas.firebaseapp.com",
   databaseURL:
-    "https://aa-ride-along-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "aa-ride-along",
-  storageBucket: "aa-ride-along.appspot.com",
-  messagingSenderId: "295187769454",
-  appId: "1:295187769454:web:3939fe236ac2a14e789e7f",
-  measurementId: "G-77659PYZMV",
+    "https://v5angkas-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "v5angkas",
+  storageBucket: "v5angkas.appspot.com",
+  messagingSenderId: "815935174111",
+  appId: "1:815935174111:web:3e6f36c80dbeb9a221006a",
+  measurementId: "G-EFZ6C567X3",
 };
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);

@@ -1,5 +1,11 @@
-import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import {
+  Image,
+  ImageBackground,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -11,10 +17,22 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const CustomDrawer = (props) => {
   const userProfile = useSelector(selectUserProfile);
   const dispatch = useDispatch();
-
+  const [fullName, setFullName] = useState("John Doe");
+  const [driverID, setDriverId] = useState("0000");
+  const [profilePic, setProfilePic] = useState(null);
+  const FName = fullName === "John Doe";
+  useEffect(() => {
+    if (userProfile.id === null) return;
+    setFullName(userProfile.info.fullName);
+    setDriverId(userProfile.info.teacherID);
+    setProfilePic(userProfile.info.profilePic);
+  }, [fullName, profilePic]);
   const handleLogout = async () => {
     try {
-      await AsyncStorage.removeItem("driverInfo");
+      await AsyncStorage.setItem(
+        "driverInfo",
+        JSON.stringify({ info: null, id: null })
+      );
       dispatch(setUserProfile({ info: null, id: null }));
     } catch (error) {
       console.error("Error logging out:", error);
@@ -39,7 +57,8 @@ const CustomDrawer = (props) => {
             alignItems: "center",
           }}
         >
-          <View
+          <Image
+            source={{ uri: profilePic }}
             style={{
               height: 80,
               width: 80,
@@ -49,16 +68,12 @@ const CustomDrawer = (props) => {
               borderWidth: 2,
               borderColor: "#ebebeb",
             }}
-          ></View>
+          />
 
-          {userProfile.info && userProfile.info.firstName ? (
+          {!FName ? (
             <View style={{ paddingLeft: 15 }}>
-              <Text style={{ color: "#fff", fontSize: 17 }}>
-                {`${userProfile.info.firstName} ${userProfile.info.lastName}`}
-              </Text>
-              <Text style={{ color: "#fff", fontSize: 12 }}>
-                {userProfile.info.email}
-              </Text>
+              <Text style={{ color: "#fff", fontSize: 17 }}>{fullName}</Text>
+              <Text style={{ color: "#fff", fontSize: 12 }}>{driverID}</Text>
             </View>
           ) : null}
         </ImageBackground>

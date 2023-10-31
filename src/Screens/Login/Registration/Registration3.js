@@ -43,6 +43,7 @@ const Registration3 = () => {
     teacherID,
     mobileNo,
     faculty,
+    gender,
     plateNo,
     isVerified,
     isAvatarSet,
@@ -59,7 +60,7 @@ const Registration3 = () => {
       // Step 2: Send email verification
       await userCredential.user.sendEmailVerification({
         handleCodeInApp: true,
-        url: "https://aa-ride-along.firebaseapp.com",
+        url: "https://v5angkas.firebaseapp.com",
       });
 
       const imageName = "licenseID" + userCredential.user.uid + ".jpg";
@@ -93,6 +94,7 @@ const Registration3 = () => {
           teacherID,
           mobileNo,
           faculty,
+          gender,
           plateNo,
           isVerified,
           isAvatarSet,
@@ -206,7 +208,7 @@ const Registration3 = () => {
                 style={{ textAlign: "center", fontSize: 14, marginTop: 5 }}
               >{`1.1 User Account Information To use AngkasAtad, you must provide accurate and up-to-date information during registration. If we discover that you have provided false information, we reserve the right to terminate your AngkasAtad account. You will be solely liable for any damages incurred as a result of using false information.
 
-        1.2 User Data Privacy We respect your privacy and are committed to protecting your personal information. Please refer to our Privacy Policy for details on how we collect, use, process, and disclose your personal data.
+        1.2 User Data Privacy We respect your privacy and are committed to protecting your personal information.
         `}</Text>
               <Text style={styles.term}>App Usage and Conduct</Text>
               <Text
@@ -214,30 +216,24 @@ const Registration3 = () => {
               >{`2.1 Compliance with Rules and Regulations You agree to abide by all the rules, regulations, and ethics set forth by AngkasAtad. Any violation of these rules may result in the termination of your AngkasAtad account without prior notice.
 
 2.2 Security of Account You are responsible for keeping your account credentials (e.g., ID and password) confidential and not sharing them with others. In the event of loss, theft, or unauthorized use of your account, you accept that the Researcher has taken reasonable security measures. You will be solely responsible for any resulting damages and will not seek compensation.
-2.3 Prohibited Activities You are not permitted to share your account with others or resell it. Engaging in activities that infringe on others' privacy, violate the law, or disrupt public order and morality is strictly prohibited. Any such actions may result in the termination of your AngkasAtad account, and you will be solely responsible for any damages without seeking compensation from the Researcher.
-`}</Text>
+
+2.3 Prohibited Activities You are not permitted to share your account with others or resell it. Engaging in activities that infringe on others' privacy, violate the law, or disrupt public order and morality is strictly prohibited. Any such actions may result in the termination of your AngkasAtad account, and you will be solely responsible for any damages without seeking compensation from the Researcher`}</Text>
               <Text style={styles.term}>
                 Account Suspension and Cancellation
               </Text>
               <Text
                 style={{ textAlign: "center", fontSize: 14, marginTop: 5 }}
-              >{`3.1 Account Inactivity If you do not access your AngkasAtad account or use any services under your account for one consecutive year, the Researchers reserves the right to cancel your account.
+              >{`3.1 Account Inactivity If you do not access your AngkasAtad account or use any services under your account for one consecutive year, the admin reserves the right to cancel your account.
 
-3.2 Supremacy of Terms Terms of use for any computer program under AngkasAtad service are an integral part of these terms. Any statements that contradict these terms are invalid, and these terms take precedence.
-
-`}</Text>
+3.2 Supremacy of Terms Terms of use for any computer program under AngkasAtad service are an integral part of these terms. Any statements that contradict these terms are invalid, and these terms take precedence.`}</Text>
               <Text style={styles.term}>Acceptance of Terms</Text>
               <Text
                 style={{ textAlign: "center", fontSize: 14, marginTop: 5 }}
-              >{`By using AngkasAtad, you acknowledge and accept all the terms and conditions outlined in this agreement. You agree not to make any claims against the Researchers for any damages incurred or potentially incurred if your account is terminated or suspended, or for any other reasons related to AngkasAtad services.
-
-`}</Text>
+              >{`By using AngkasAtad, you acknowledge and accept all the terms and conditions outlined in this agreement. You agree not to make any claims against the Researchers for any damages incurred or potentially incurred if your account is terminated or suspended, or for any other reasons related to AngkasAtad services.`}</Text>
               <Text style={styles.term}>Amendments</Text>
               <Text
                 style={{ textAlign: "center", fontSize: 14, marginTop: 5 }}
               >{`The Researchers reserves the right to amend these terms and conditions for any reason, including compliance with applicable laws, government policies, rules, regulations, or other relevant matters.
-
-
 `}</Text>
             </View>
           </ScrollView>
@@ -291,7 +287,6 @@ const Registration3 = () => {
         defaultValue={plateNo}
         autoCorrect={false}
         returnKeyType="next"
-        keyboardType="number-pad"
         onChangeText={(no) => setPlateNo(no)}
       />
       <View style={{ flexDirection: "row", marginTop: 40, marginBottom: 5 }}>
@@ -337,6 +332,7 @@ const Registration3 = () => {
             regInfo.teacherID,
             regInfo.mobileNo,
             regInfo.selectedFaculty,
+            regInfo.selectedGender,
             plateNo,
             isVerified,
             isAvatarSet,
@@ -353,7 +349,7 @@ const Registration3 = () => {
             color: isChecked ? "#fff" : "#121212",
           }}
         >
-          Next
+          Register
         </Text>
       </TouchableOpacity>
     </View>

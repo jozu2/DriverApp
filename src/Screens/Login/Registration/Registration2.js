@@ -19,13 +19,16 @@ const Registration2 = () => {
   const navigation = useNavigation();
   const regInfo = useSelector(selectRegistrationInfo);
   const [selectedFaculty, setselectedFaculty] = useState("");
+  const [selectedGender, setselectedGender] = useState("");
   const Faculty = ["IT", "ICT", "HRM", "BM", "COE"];
+  const Gender = ["Male", "Female"];
   const [teacherID, setTeacherID] = useState("");
   const [address, setAddress] = useState("");
   const dispatch = useDispatch();
   const [errorId, setErrorId] = useState(false);
   const [errorAddress, setErrorAddress] = useState(false);
   const [errorFaculty, setErrorFaculty] = useState(false);
+  const [errorGender, setErrorGender] = useState(false);
   useEffect(() => {
     if (errorId) {
       setTimeout(() => {
@@ -111,6 +114,27 @@ const Registration2 = () => {
           * Please choose your Faculty building
         </Text>
       )}
+
+      <View style={styles.dropDown}>
+        <Picker
+          selectedValue={selectedGender}
+          onValueChange={(itemValue, itemIndex) => setselectedGender(itemValue)}
+        >
+          <Picker.Item
+            label="Gender"
+            value=""
+            style={{ color: "gray", fontSize: 17 }}
+          />
+          {Gender.map((gender, index) => (
+            <Picker.Item label={gender} value={gender} key={index} />
+          ))}
+        </Picker>
+      </View>
+      {errorGender && (
+        <Text style={styles.txtError}>
+          * Please choose your Gender building
+        </Text>
+      )}
       <TouchableOpacity
         style={styles.loginBtn}
         onPress={() => {
@@ -128,9 +152,15 @@ const Registration2 = () => {
             return;
           }
 
+          if (selectedGender === "") {
+            setErrorGender(true);
+            return;
+          }
+
           const OldAndNewData = {
             ...regInfo,
             selectedFaculty,
+            selectedGender,
             teacherID,
             address,
           };

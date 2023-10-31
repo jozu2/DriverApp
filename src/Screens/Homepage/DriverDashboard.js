@@ -15,10 +15,8 @@ const DriverDashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hideCreateRideBtn, setHideCreateRideBtn] = useState(false);
 
-  // const dispatch = useDispatch();
-
   useEffect(() => {
-    const dbRef = ref(db, `POSTED_RIDES/${driverProfile.fullName}`);
+    const dbRef = ref(db, `POSTED_RIDES/${driverProfile.id}`);
 
     const onDataChange = (snapshot) => {
       const requestData = snapshot.val();
@@ -32,10 +30,6 @@ const DriverDashboard = () => {
 
       setFetchedData(requestData);
       setHideCreateRideBtn(true);
-      // if (requestData.request) {
-      //   dispatch(setViewBookings(requestData.request));
-      //   console.log(requestData.request);
-      // }
 
       setTimeout(() => {
         setIsLoading(false);
@@ -89,5 +83,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#313133",
   },
 });
