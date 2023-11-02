@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  requestHide: false,
   registrationInfo: {
     fullName: null,
     emailAdd: null,
@@ -54,6 +55,9 @@ export const navSlice = createSlice({
   name: "nav",
   initialState,
   reducers: {
+    setRequestHide: (state, action) => {
+      state.requestHide = action.payload;
+    },
     setRegistrationInfo: (state, action) => {
       state.registrationInfo = action.payload;
     },
@@ -86,6 +90,7 @@ export const navSlice = createSlice({
 });
 
 export const {
+  setRequestHide,
   setRegistrationInfo,
   setSavedImage,
   setOrigin,
@@ -95,7 +100,7 @@ export const {
   setUserProfile,
   setCreatedRideInfo,
 } = navSlice.actions;
-
+export const selectRequestHide = (state) => state.nav.requestHide;
 export const selectRegistrationInfo = (state) => state.nav.registrationInfo;
 export const selectOrigin = (state) => state.nav.origin;
 export const selectSavedImage = (state) => state.nav.savedImage;

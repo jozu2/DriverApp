@@ -110,8 +110,6 @@ const Registration3 = () => {
     }
   };
 
-  console.log(regInfo);
-
   return (
     <View
       style={{

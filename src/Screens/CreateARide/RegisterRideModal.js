@@ -357,7 +357,7 @@ const RegisterRideModal = () => {
                   const nowInManila = moment.tz(manilaTimeZone);
                   const depTimeManila = moment.tz(manilaTimeZone);
                   const dpTime = depTimeManila
-                    .add(5, "minutes")
+                    .add(1, "minutes")
                     .format("HH:mm:ss");
                   const timeCreated = nowInManila.format("HH:mm:ss");
                   try {
@@ -385,15 +385,24 @@ const RegisterRideModal = () => {
                       },
                       driverInfo: {
                         driverId: driverData.id,
-                        driverInfo: driverData.info,
+                        driverPic: driverData.info.profilePic,
+                        driverName: driverData.info.fullName,
+                        driverSchoolId: driverData.info.teacherID,
                       },
                       status: {
                         departureTime: dpTime,
                         timePosted: timeCreated,
+                        dateCreated: driverData.info.dateCreated,
                         isStarted: false,
+                        notifList: true,
+                        notifChat: true,
                       },
                       request: {
                         q2ewacz45xczxccc: {
+                          status: {
+                            isAccepted: false,
+                            isDeclined: false,
+                          },
                           requestCoordsInfo: {
                             description: "sampernandu lalam tete",
                             latitude: 15.0406,
@@ -401,11 +410,16 @@ const RegisterRideModal = () => {
                             numberOfPassenger: 2,
                           },
                           userInfo: {
-                            fullName: "name sdfasdasd",
-                            userID: "asdasdasdas234234",
+                            fullName: "Joshua Melendres",
+                            userID: "q2ewacz45xczxccc",
+                            userCount: 2,
                           },
                         },
                         sd243523fsdf: {
+                          status: {
+                            isAccepted: false,
+                            isDeclined: false,
+                          },
                           requestCoordsInfo: {
                             description: " xx sampernandu test lalam tete",
                             latitude: 14.9663,
@@ -413,8 +427,9 @@ const RegisterRideModal = () => {
                             numberOfPassenger: 3,
                           },
                           userInfo: {
-                            fullName: "jozsdfasdasd",
-                            userID: "xd123",
+                            fullName: "joz jozzzzzz",
+                            userID: "sd243523fsdf",
+                            userCount: 1,
                           },
                         },
                       },

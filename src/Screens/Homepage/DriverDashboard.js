@@ -69,6 +69,11 @@ const DriverDashboard = () => {
             vehicle={fetchedData.rideInfo.vehicle}
             status={fetchedData.status}
             request={fetchedData.request ? fetchedData.request : null}
+            waypoints={
+              fetchedData.rideInfo.waypoints
+                ? fetchedData.rideInfo.waypoints
+                : null
+            }
           />
         )}
       </View>
