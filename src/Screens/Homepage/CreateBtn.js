@@ -169,8 +169,10 @@ const CreateBtn = () => {
           fontSize: 30,
           fontWeight: "500",
           textAlign: "center",
-          color: "#909090",
-          marginTop: 15,
+          color: activeIndicator ? "#ebebeb" : "#fff",
+          backgroundColor: activeIndicator ? "transparent" : "#8660bf",
+          paddingVertical: 10,
+          borderRadius: 10,
         }}
       >
         {activeIndicator ? "Loading . . ." : "CREATE A RIDE"}
@@ -183,7 +185,7 @@ export default CreateBtn;
 
 const styles = StyleSheet.create({
   wl: {
-    backgroundColor: "#313133",
+    backgroundColor: "#313338",
 
     width: 200,
     height: 20,
@@ -193,7 +195,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   wl2: {
-    backgroundColor: "#313133",
+    backgroundColor: "#313338",
 
     width: 200,
     height: 20,
@@ -203,7 +205,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   wl3: {
-    backgroundColor: "#313133",
+    backgroundColor: "#313338",
 
     width: 20,
     height: 200,
@@ -215,7 +217,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   wl4: {
-    backgroundColor: "#313133",
+    backgroundColor: "#313338",
 
     width: 20,
     height: 200,

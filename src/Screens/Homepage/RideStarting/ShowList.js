@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native";
@@ -17,7 +17,7 @@ const ShowList = ({ request, driverID, vehicle }) => {
           right: 0,
           bottom: 0,
           zIndex: 20,
-          backgroundColor: "rgba(0, 0, 0, 0.12)",
+          backgroundColor: "rgba(0, 0, 0, 0.6)",
           position: "absolute",
           alignContent: "center",
           justifyContent: "center",
@@ -54,7 +54,7 @@ const ShowList = ({ request, driverID, vehicle }) => {
           right: 0,
           bottom: 0,
           zIndex: 20,
-          backgroundColor: "rgba(0, 0, 0, 0.12)",
+          backgroundColor: "rgba(0, 0, 0, 0.6)",
           position: "absolute",
           alignContent: "center",
           justifyContent: "center",
@@ -64,7 +64,7 @@ const ShowList = ({ request, driverID, vehicle }) => {
       >
         <View
           style={{
-            width: "85%",
+            width: "90%",
             height: 440,
             justifyContent: "center",
             alignSelf: "center",
@@ -77,8 +77,15 @@ const ShowList = ({ request, driverID, vehicle }) => {
             {requestData &&
               Object.keys(requestData).map((key) => {
                 const item = request[key];
+                console.log(item);
+                if (!item) {
+                  // Skip rendering if the item is null or undefined
+                  return null;
+                }
 
-                const { fullName, userID } = item.userInfo;
+                const { fullName, userID, userProfile, userCount } =
+                  item.userInfo;
+
                 return (
                   <TouchableOpacity
                     onPress={() => {
@@ -87,9 +94,9 @@ const ShowList = ({ request, driverID, vehicle }) => {
                     }}
                     key={key}
                     style={{
-                      width: "80%",
+                      width: "100%",
                       alignSelf: "center",
-                      backgroundColor: "gray",
+                      backgroundColor: "#1e1f22",
                       marginTop: 15,
                       borderRadius: 23,
                       flexDirection: "row",
@@ -98,39 +105,58 @@ const ShowList = ({ request, driverID, vehicle }) => {
                       height: 70,
                     }}
                   >
-                    <View
+                    <Image
+                      source={{ uri: userProfile }}
                       style={{
-                        borderWidth: 2,
-                        borderColor: "#696969",
+                        borderWidth: 3,
+                        borderColor: "#8660bf",
                         width: 60,
                         height: 60,
                         marginLeft: 19,
                         borderRadius: 50,
+                        backgroundColor: "#ebebeb",
+                      }}
+                    />
+                    <View
+                      style={{
+                        marginLeft: 20,
+                        alignItems: "center",
+                        flexDirection: "row",
                       }}
                     >
-                      <View
-                        style={{
-                          flex: 1,
-                          backgroundColor: "#ebebeb",
-                          borderRadius: 50,
-                        }}
-                      ></View>
-                    </View>
-                    <View style={{ marginLeft: 15 }}>
-                      <Text style={{ color: "#fff", fontSize: 18 }}>
-                        {fullName}
-                      </Text>
-                      <Text
-                        style={{
-                          marginLeft: 5,
-                          color: "#fff",
-                          fontSize: 12,
-                          lineHeight: 12,
-                          fontWeight: "300",
-                        }}
-                      >
-                        {userID}
-                      </Text>
+                      <View>
+                        <Text style={{ color: "#fff", fontSize: 19 }}>
+                          {fullName}
+                        </Text>
+                        <Text
+                          style={{
+                            marginLeft: 5,
+                            color: "#fff",
+                            fontSize: 12,
+                            lineHeight: 12,
+                            fontWeight: "300",
+                          }}
+                        >
+                          {userID}
+                        </Text>
+                      </View>
+                      <View>
+                        <Text
+                          style={{
+                            color: "#fff",
+                            fontSize: 22,
+                            fontWeight: "bold",
+                            top: -35,
+                            zIndex: 300,
+                            marginLeft: 20,
+                            backgroundColor: "#f03f46",
+                            paddingHorizontal: 10,
+                            borderRadius: 5,
+                          }}
+                        >
+                          {userCount}
+                        </Text>
+                      </View>
                     </View>
                   </TouchableOpacity>
                 );

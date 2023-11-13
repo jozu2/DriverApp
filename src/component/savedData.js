@@ -164,7 +164,7 @@ const CreateARide = () => {
             }}
             title="DHVSU"
             identifier="origin"
-            pinColor="green"
+            pinColor="#25a45c"
           >
             <Image
               source={require("./../../assets/SchoolIcon.png")}
@@ -211,7 +211,7 @@ const CreateARide = () => {
             }}
             apikey="AIzaSyBVtjPXDhyI3n_xnDYYbX0lOK3zpNQg_1o"
             strokeWidth={4}
-            strokeColor="green"
+            strokeColor="#25a45c"
             timePrecision="now"
             optimizeWaypoints={true}
             onReady={(result) => {

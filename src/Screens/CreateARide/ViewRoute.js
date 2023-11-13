@@ -48,7 +48,7 @@ const ViewRoute = () => {
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#313133",
+          backgroundColor: "#313338",
         }}
       >
         {editModeOn && (
@@ -87,7 +87,7 @@ const ViewRoute = () => {
               longitude: originData.longitude,
             }}
             title={originData.title}
-            pinColor="red"
+            pinColor="#f03f46"
           />
           <Marker
             coordinate={{
@@ -95,7 +95,7 @@ const ViewRoute = () => {
               longitude: destinationData.longitude,
             }}
             title={destinationData.title}
-            pinColor="red"
+            pinColor="#f03f46"
           />
           <MapViewDirections
             origin={{
@@ -109,7 +109,7 @@ const ViewRoute = () => {
             waypoints={saveClicked ? waypointsArray : waypointRedux}
             apikey="AIzaSyBVtjPXDhyI3n_xnDYYbX0lOK3zpNQg_1o"
             strokeWidth={4}
-            strokeColor={editModeOn ? "rgba(0, 128, 0, 0.3)" : "green"}
+            strokeColor={editModeOn ? "rgba(0, 128, 0, 0.3)" : "#25a45c"}
             timePrecision="now"
             optimizeWaypoints={true}
             onReady={(result) => {
@@ -135,7 +135,7 @@ const ViewRoute = () => {
               waypoints={waypointsArray}
               apikey="AIzaSyBVtjPXDhyI3n_xnDYYbX0lOK3zpNQg_1o"
               strokeWidth={4}
-              strokeColor="red"
+              strokeColor="#f03f46"
               timePrecision="now"
               optimizeWaypoints={true}
             />
@@ -147,7 +147,7 @@ const ViewRoute = () => {
         <TouchableOpacity
           style={{
             width: "20%",
-            backgroundColor: "gray",
+            backgroundColor: "#f03f46",
             position: "absolute",
             bottom: 50,
             left: "7%",
@@ -182,7 +182,7 @@ const ViewRoute = () => {
         <TouchableOpacity
           style={{
             width: editModeOn ? "30%" : "40%",
-            backgroundColor: "gray",
+            backgroundColor: "#8660bf",
             position: "absolute",
             bottom: 50,
             borderRadius: 10,
@@ -219,7 +219,7 @@ const ViewRoute = () => {
         <TouchableOpacity
           style={{
             width: editModeOn ? "30%" : "40%",
-            backgroundColor: "gray",
+            backgroundColor: "#1e1f22",
             position: "absolute",
             bottom: 50,
             borderRadius: 10,
@@ -245,7 +245,7 @@ const ViewRoute = () => {
         <TouchableOpacity
           style={{
             width: "20%",
-            backgroundColor: "gray",
+            backgroundColor: "#25a45c",
             position: "absolute",
             bottom: 50,
             right: "7%",

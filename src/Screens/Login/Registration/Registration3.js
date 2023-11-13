@@ -292,7 +292,7 @@ const Registration3 = () => {
           style={styles.checkbox}
           value={isChecked}
           onValueChange={setChecked}
-          color={isChecked ? "green" : undefined}
+          color={isChecked ? "#25a45c" : undefined}
         />
         <View style={{ flexDirection: "row" }}>
           <Text>{`  I agree with the `}</Text>

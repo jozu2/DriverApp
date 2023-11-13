@@ -34,7 +34,7 @@ const initialState = {
     description: null,
   },
   viewBookings: null,
-  userProfile: null,
+  userProfile: { info: null, id: null },
   createdRideInfo: {
     driverInfo: { fullName: null, driverId: null },
     origin: {

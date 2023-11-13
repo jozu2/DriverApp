@@ -124,13 +124,13 @@ const RegisterRideModal = () => {
               style={{
                 fontSize: 16,
                 alignSelf: "center",
-                color: "#121212",
+                color: "#fff",
                 textAlign: "center",
               }}
             >
               {originData.description === null ? "" : `Meeting spot: `}
               {originData.description == null
-                ? "Select meeting spot"
+                ? "Select Starting Point"
                 : `${originData.title} - `}
 
               {originData.description == null ? (
@@ -140,10 +140,10 @@ const RegisterRideModal = () => {
                   style={{
                     textDecorationLine: "underline",
                     fontSize: 13,
-                    color: "#121212",
+                    color: "#fff",
                   }}
                 >
-                  {`Edit`} <Feather name="edit-2" size={12} color={"#121212"} />
+                  {`Edit`} <Feather name="edit-2" size={12} color={"#fff"} />
                 </Text>
               )}
             </Text>
@@ -319,7 +319,7 @@ const RegisterRideModal = () => {
                   paddingVertical: 18,
                   borderRadius: 120,
                   marginBottom: 15,
-                  backgroundColor: "#b1b1b1",
+                  backgroundColor: "#f03f46",
                   width: " 30%",
                   marginRight: 15,
                 }}
@@ -346,7 +346,7 @@ const RegisterRideModal = () => {
                   paddingVertical: 18,
                   borderRadius: 120,
                   marginBottom: 15,
-                  backgroundColor: "#b1b1b1",
+                  backgroundColor: "#8660bf",
                   width: " 30%",
 
                   marginLeft: 15,
@@ -372,6 +372,7 @@ const RegisterRideModal = () => {
 
                         waypoints: waypoints,
                         destination: {
+                          title: destinationData.title,
                           latitude: destinationData.latitude,
                           longitude: destinationData.longitude,
                           description: destinationData.description,
@@ -388,6 +389,12 @@ const RegisterRideModal = () => {
                         driverPic: driverData.info.profilePic,
                         driverName: driverData.info.fullName,
                         driverSchoolId: driverData.info.teacherID,
+                        plateNo: driverData.info.plateNo,
+                        mobileNo: driverData.info.mobileNo,
+                        faculty: driverData.info.faculty,
+                        dateCreated: driverData.info.dateCreated,
+                        address: driverData.info.address,
+                        completedRide: driverData.info.completedRide,
                       },
                       status: {
                         departureTime: dpTime,
@@ -397,42 +404,7 @@ const RegisterRideModal = () => {
                         notifList: true,
                         notifChat: true,
                       },
-                      request: {
-                        q2ewacz45xczxccc: {
-                          status: {
-                            isAccepted: false,
-                            isDeclined: false,
-                          },
-                          requestCoordsInfo: {
-                            description: "sampernandu lalam tete",
-                            latitude: 15.0406,
-                            longitude: 120.5357,
-                            numberOfPassenger: 2,
-                          },
-                          userInfo: {
-                            fullName: "Joshua Melendres",
-                            userID: "q2ewacz45xczxccc",
-                            userCount: 2,
-                          },
-                        },
-                        sd243523fsdf: {
-                          status: {
-                            isAccepted: false,
-                            isDeclined: false,
-                          },
-                          requestCoordsInfo: {
-                            description: " xx sampernandu test lalam tete",
-                            latitude: 14.9663,
-                            longitude: 120.4946,
-                            numberOfPassenger: 3,
-                          },
-                          userInfo: {
-                            fullName: "joz jozzzzzz",
-                            userID: "sd243523fsdf",
-                            userCount: 1,
-                          },
-                        },
-                      },
+                      request: null,
                     });
 
                     navigation.navigate("Home");
@@ -462,10 +434,11 @@ const styles = StyleSheet.create({
   content: {
     fontWeight: "bold",
     fontSize: 25,
-    backgroundColor: "#ebebeb",
+    backgroundColor: "#1e1f22",
     width: "100%",
     paddingVertical: 25,
     marginBottom: 10,
+    color: "#fff",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     textAlign: "center",

@@ -69,7 +69,7 @@ const SetDestination = () => {
               key={marker.id}
               coordinate={marker.coordinate}
               title={marker.title}
-              pinColor="red"
+              pinColor="#f03f46"
               onPress={() => {
                 setPressedMarkerPic({
                   img1: marker.image,
@@ -96,7 +96,7 @@ const SetDestination = () => {
         <>
           <View
             style={{
-              backgroundColor: "#fff",
+              backgroundColor: "#313338",
               position: "absolute",
               bottom: 0,
               alignSelf: "center",
@@ -106,7 +106,7 @@ const SetDestination = () => {
               paddingBottom: 20,
               paddingHorizontal: 20,
               borderWidth: 3,
-              borderColor: "#d1d1d1",
+              borderColor: "#1e1f22",
             }}
           >
             <TouchableOpacity
@@ -126,6 +126,8 @@ const SetDestination = () => {
               <Image
                 source={pressedMarkerPic.img1}
                 style={{
+                  borderWidth: 2,
+                  borderColor: "#25a45c",
                   borderRadius: 5,
                   width: "100%",
                   height: "100%",
@@ -153,7 +155,8 @@ const SetDestination = () => {
                 source={pressedMarkerPic.img2}
                 style={{
                   borderRadius: 5,
-
+                  borderWidth: 2,
+                  borderColor: "#25a45c",
                   width: "100%",
                   height: "100%",
                   alignSelf: "center",
@@ -163,7 +166,14 @@ const SetDestination = () => {
               />
             </TouchableOpacity>
 
-            <Text style={{ fontSize: 26, fontWeight: "400", paddingTop: 20 }}>
+            <Text
+              style={{
+                fontSize: 26,
+                fontWeight: "400",
+                paddingTop: 20,
+                color: "#fff",
+              }}
+            >
               {pressedMarkerDes.title}
             </Text>
             <Text style={{ color: "gray", fontSize: 16, marginBottom: 20 }}>
@@ -176,7 +186,7 @@ const SetDestination = () => {
                 flexDirection: "row",
                 justifyContent: "center",
                 borderRadius: 22,
-                backgroundColor: "gray",
+                backgroundColor: "#8660bf",
                 alignSelf: "flex-end",
                 marginRight: 5,
                 width: "60%",

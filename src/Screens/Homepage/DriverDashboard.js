@@ -44,7 +44,6 @@ const DriverDashboard = () => {
 
     return () => off(dbRef, "value", onDataChange);
   }, [driverProfile.id]);
-
   if (isLoading) {
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -69,6 +68,7 @@ const DriverDashboard = () => {
             vehicle={fetchedData.rideInfo.vehicle}
             status={fetchedData.status}
             request={fetchedData.request ? fetchedData.request : null}
+            chat={fetchedData.chat ? fetchedData.chat : null}
             waypoints={
               fetchedData.rideInfo.waypoints
                 ? fetchedData.rideInfo.waypoints
@@ -88,6 +88,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#313133",
+    backgroundColor: "#313338",
   },
 });

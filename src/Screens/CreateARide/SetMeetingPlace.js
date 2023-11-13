@@ -63,7 +63,7 @@ const SetMeetingPlace = () => {
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#313133",
+          backgroundColor: "#313338",
         }}
       >
         <MapView
@@ -89,7 +89,7 @@ const SetMeetingPlace = () => {
               coordinate={marker.coordinate}
               title={marker.title}
               description={marker.description}
-              pinColor="red"
+              pinColor="#f03f46"
               onPress={() => {
                 setPressedMarkerPic({
                   img1: marker.image,
@@ -116,7 +116,7 @@ const SetMeetingPlace = () => {
         <>
           <View
             style={{
-              backgroundColor: "#fff",
+              backgroundColor: "#313338",
               position: "absolute",
               bottom: 0,
               alignSelf: "center",
@@ -126,7 +126,7 @@ const SetMeetingPlace = () => {
               paddingBottom: 20,
               paddingHorizontal: 20,
               borderWidth: 3,
-              borderColor: "#d1d1d1",
+              borderColor: "#1e1f22",
             }}
           >
             <TouchableOpacity
@@ -147,6 +147,8 @@ const SetMeetingPlace = () => {
                 source={pressedMarkerPic.img1}
                 style={{
                   borderRadius: 5,
+                  borderWidth: 2,
+                  borderColor: "#25a45c",
                   width: "100%",
                   height: "100%",
                   alignSelf: "center",
@@ -173,7 +175,8 @@ const SetMeetingPlace = () => {
                 source={pressedMarkerPic.img2}
                 style={{
                   borderRadius: 5,
-
+                  borderWidth: 2,
+                  borderColor: "#25a45c",
                   width: "100%",
                   height: "100%",
                   alignSelf: "center",
@@ -183,7 +186,14 @@ const SetMeetingPlace = () => {
               />
             </TouchableOpacity>
 
-            <Text style={{ fontSize: 26, fontWeight: "400", paddingTop: 20 }}>
+            <Text
+              style={{
+                fontSize: 26,
+                fontWeight: "400",
+                paddingTop: 20,
+                color: "#fff",
+              }}
+            >
               {pressedMarkerDes.title}
             </Text>
             <Text style={{ color: "gray", fontSize: 16, marginBottom: 20 }}>
@@ -196,7 +206,7 @@ const SetMeetingPlace = () => {
                 flexDirection: "row",
                 justifyContent: "center",
                 borderRadius: 22,
-                backgroundColor: "gray",
+                backgroundColor: "#8660bf",
                 alignSelf: "flex-end",
                 marginRight: 25,
                 width: "50%",

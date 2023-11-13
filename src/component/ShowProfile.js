@@ -14,12 +14,13 @@ import { setRequestHide } from "../Redux/navSlice";
 
 const ShowProfile = ({ data, DriverID, vehicle }) => {
   const userCount = data.userCount;
-  const userID = data.userID;
+  const userID = data;
   const seatCapacity = parseInt(vehicle.seatCapacity, 10);
   const seatOccupied = vehicle.SeatOccupied;
   const dispatch = useDispatch();
   const availableSeat = seatCapacity - seatOccupied;
   console.log(userCount > availableSeat);
+  console.log(data.accID);
   const handleAccept = () => {
     if (userCount > availableSeat) {
       Alert.alert(
@@ -28,7 +29,7 @@ const ShowProfile = ({ data, DriverID, vehicle }) => {
       );
       return;
     }
-    const path = `POSTED_RIDES/${DriverID}/request/${userID}/status`;
+    const path = `POSTED_RIDES/${DriverID}/request/${data.accID}/status`;
 
     const acceptRequest = ref(db, path + "/isAccepted");
     set(acceptRequest, true);
@@ -41,12 +42,12 @@ const ShowProfile = ({ data, DriverID, vehicle }) => {
     dispatch(setRequestHide(true));
   };
   const handleDecline = () => {
-    const path = `POSTED_RIDES/${DriverID}/request/${userID}/status`;
-
+    const path = `POSTED_RIDES/${DriverID}/request/${data.accID}/status`;
     const declineRequest = ref(db, path + "/isDeclined");
     set(declineRequest, true);
     dispatch(setRequestHide(true));
   };
+  console.log(data);
   return (
     <View
       style={{
@@ -58,13 +59,14 @@ const ShowProfile = ({ data, DriverID, vehicle }) => {
       }}
     >
       <Image
+        source={{ uri: data.userProfile }}
         style={{
-          backgroundColor: "red",
+          backgroundColor: "#f03f46",
           width: 120,
           height: 120,
           borderRadius: 120,
-          borderWidth: 2,
-          borderColor: "green",
+          borderWidth: 4,
+          borderColor: "#8660bf",
         }}
       />
       <Text
@@ -77,24 +79,25 @@ const ShowProfile = ({ data, DriverID, vehicle }) => {
       >
         {data.fullName}
       </Text>
-      <Text
-        style={{
-          fontSize: 15,
-          lineHeight: 15,
-          fontWeight: "300",
-        }}
-      >
-        Bachelor of Science in Information Technology
-      </Text>
+
       <Text
         style={{
           alignSelf: "center",
-          fontSize: 15,
-          lineHeight: 18,
+          fontSize: 17,
+          lineHeight: 17,
           fontWeight: "400",
         }}
       >
-        {`Palat, Porac, Pampanga`}
+        {data.address}
+      </Text>
+      <Text
+        style={{
+          fontSize: 14,
+          lineHeight: 17,
+          fontWeight: "300",
+        }}
+      >
+        {`BS${data.faculty}`}
       </Text>
       <View
         style={{
@@ -106,13 +109,13 @@ const ShowProfile = ({ data, DriverID, vehicle }) => {
       >
         <TouchableOpacity
           onPress={handleDecline}
-          style={[styles.Btn, { backgroundColor: "red" }]}
+          style={[styles.Btn, { backgroundColor: "#f03f46" }]}
         >
           <Text style={styles.text}>Decline</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={handleAccept}
-          style={[styles.Btn, { backgroundColor: "green" }]}
+          style={[styles.Btn, { backgroundColor: "#25a45c" }]}
         >
           <Text style={styles.text}>Accept</Text>
         </TouchableOpacity>
@@ -125,7 +128,7 @@ export default ShowProfile;
 const styles = StyleSheet.create({
   Btn: {
     width: "30%",
-    backgroundColor: "red",
+    backgroundColor: "#f03f46",
     borderRadius: 10,
     marginHorizontal: 10,
   },

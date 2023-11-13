@@ -57,7 +57,7 @@ const SetAvatar = () => {
       <View
         style={{
           flex: 1,
-          backgroundColor: "#313133",
+          backgroundColor: "#313338",
         }}
       >
         <Text
@@ -121,9 +121,9 @@ const SetAvatar = () => {
                         style={[
                           styles.image,
                           {
-                            borderWidth: pressed === male.id ? 5 : 2,
+                            borderWidth: pressed === male.id ? 7 : 4,
                             borderColor:
-                              pressed === male.id ? "#0ab0d1" : "gray",
+                              pressed === male.id ? "#8660bf" : "#1e1f22",
                           },
                         ]}
                       />
@@ -145,9 +145,9 @@ const SetAvatar = () => {
                         style={[
                           styles.image,
                           {
-                            borderWidth: pressed === male.id ? 5 : 2,
+                            borderWidth: pressed === male.id ? 7 : 4,
                             borderColor:
-                              pressed === male.id ? "#0ab0d1" : "gray",
+                              pressed === male.id ? "#8660bf" : "#1e1f22",
                           },
                         ]}
                       />
@@ -185,7 +185,7 @@ const SetAvatar = () => {
                           {
                             borderWidth: pressed === female.id ? 5 : 2,
                             borderColor:
-                              pressed === female.id ? "#0ab0d1" : "gray",
+                              pressed === female.id ? "#8660bf" : "1e1f22",
                           },
                         ]}
                       />
@@ -209,7 +209,7 @@ const SetAvatar = () => {
                           {
                             borderWidth: pressed === female.id ? 5 : 2,
                             borderColor:
-                              pressed === female.id ? "#0ab0d1" : "gray",
+                              pressed === female.id ? "#8660bf" : "#1e1f22",
                           },
                         ]}
                       />
@@ -236,14 +236,16 @@ const SetAvatar = () => {
             onPress={setProfile}
             style={{
               alignSelf: "center",
-              backgroundColor: "#ebebeb",
+              backgroundColor: "#8660bf",
               borderRadius: 10,
               width: "50%",
               paddingVertical: 8,
               marginTop: 12,
             }}
           >
-            <Text style={{ fontSize: 22, textAlign: "center" }}>Done</Text>
+            <Text style={{ fontSize: 22, textAlign: "center", color: "#fff" }}>
+              Done
+            </Text>
           </TouchableOpacity>
         )}
       </View>

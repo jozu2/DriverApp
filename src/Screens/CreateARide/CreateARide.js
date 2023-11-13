@@ -11,7 +11,7 @@ const CreateARide = () => {
       <View
         style={{
           flex: 1,
-          backgroundColor: "#313133",
+          backgroundColor: "#313338",
         }}
       >
         <RegisterRideModal />

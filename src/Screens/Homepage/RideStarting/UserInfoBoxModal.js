@@ -18,7 +18,7 @@ const UserInfoBoxModal = () => {
       <View
         style={{
           width: "98%",
-          backgroundColor: "green",
+          backgroundColor: "#25a45c",
           height: "28%",
           position: "absolute",
           alignSelf: "center",

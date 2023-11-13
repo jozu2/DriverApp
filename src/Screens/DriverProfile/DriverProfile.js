@@ -24,7 +24,7 @@ const DriverProfile = () => {
         <View>
           <View
             style={{
-              backgroundColor: "#313133",
+              backgroundColor: "#1e1f22",
               width: "100%",
               height: 530,
             }}
@@ -67,7 +67,7 @@ const DriverProfile = () => {
                 borderRadius: 5000,
                 alignSelf: "center",
                 borderWidth: 4,
-                borderColor: "#fff",
+                borderColor: "#8660bf",
                 zIndex: 10,
               }}
             />
@@ -100,7 +100,7 @@ const DriverProfile = () => {
                 paddingTop: 10,
               }}
             >
-              <Icon name="location" size={20} color="green" />
+              <Icon name="location" size={20} color="#25a45c" />
 
               <Text
                 style={{
@@ -116,13 +116,16 @@ const DriverProfile = () => {
             </View>
             <View
               style={{
-                backgroundColor: "#ebebeb",
+                backgroundColor: "#8660bf",
                 width: "90%",
                 alignSelf: "center",
                 borderRadius: 10,
                 position: "absolute",
                 bottom: -30,
-                borderBottomColor: "gray",
+                borderBottomColor: "#121212",
+                borderTopColor: "#ebebeb",
+                borderRightColor: "#fff",
+                borderLeftColor: "gray",
                 borderWidth: 2,
               }}
             >
@@ -144,7 +147,9 @@ const DriverProfile = () => {
                       style={{
                         fontSize: 17,
                         fontWeight: "400",
-                        color: UserProfile.info.isVerified ? `green` : `red`,
+                        color: UserProfile.info.isVerified
+                          ? `#25a45c`
+                          : `#f03f46`,
                       }}
                     >
                       {UserProfile.info.isVerified ? `YES` : `NO`}
@@ -153,7 +158,7 @@ const DriverProfile = () => {
                       style={{
                         fontSize: 12,
                         fontWeight: "500",
-                        color: "#4f4f4f",
+                        color: "#ebebeb",
                       }}
                     >
                       Verified
@@ -164,7 +169,7 @@ const DriverProfile = () => {
                       style={{
                         fontSize: 17,
                         fontWeight: "400",
-                        color: "black",
+                        color: "#fff",
                       }}
                     >
                       {UserProfile.info.completedRide}
@@ -173,7 +178,7 @@ const DriverProfile = () => {
                       style={{
                         fontSize: 12,
                         fontWeight: "500",
-                        color: "#4f4f4f",
+                        color: "#ebebeb",
                       }}
                     >
                       Total Rides
@@ -184,7 +189,7 @@ const DriverProfile = () => {
                       style={{
                         fontSize: 17,
                         fontWeight: "400",
-                        color: "black",
+                        color: "#fff",
                       }}
                     >
                       {UserProfile.info.dateCreated}
@@ -193,7 +198,7 @@ const DriverProfile = () => {
                       style={{
                         fontSize: 12,
                         fontWeight: "500",
-                        color: "#4f4f4f",
+                        color: "#ebebeb",
                       }}
                     >
                       Date Created
