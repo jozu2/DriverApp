@@ -70,7 +70,7 @@ export default Registration4;
 
 const styles = StyleSheet.create({
   loginBtn: {
-    backgroundColor: "gray",
+    backgroundColor: "#8660bf",
     width: "40%",
     paddingVertical: 8,
     marginHorizontal: 15,

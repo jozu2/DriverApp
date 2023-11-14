@@ -357,7 +357,7 @@ const RegisterRideModal = () => {
                   const nowInManila = moment.tz(manilaTimeZone);
                   const depTimeManila = moment.tz(manilaTimeZone);
                   const dpTime = depTimeManila
-                    .add(1, "minutes")
+                    .add(15, "minutes")
                     .format("HH:mm:ss");
                   const timeCreated = nowInManila.format("HH:mm:ss");
                   try {
@@ -394,6 +394,7 @@ const RegisterRideModal = () => {
                         faculty: driverData.info.faculty,
                         dateCreated: driverData.info.dateCreated,
                         address: driverData.info.address,
+                        stars: driverData.info.star,
                         completedRide: driverData.info.completedRide,
                       },
                       status: {
@@ -402,6 +403,7 @@ const RegisterRideModal = () => {
                         dateCreated: driverData.info.dateCreated,
                         isStarted: false,
                         notifList: true,
+                        isFinished: false,
                         notifChat: true,
                       },
                       request: null,

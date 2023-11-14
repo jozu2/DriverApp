@@ -17,7 +17,9 @@ const DriverProfile = () => {
   const handleOpenDrawer = () => {
     navigation.openDrawer();
   };
+
   const faculty = UserProfile.info.faculty;
+
   return (
     <SafeAreaView>
       {UserProfile && (
@@ -142,6 +144,26 @@ const DriverProfile = () => {
                     justifyContent: "space-between",
                   }}
                 >
+                  <View style={{ alignItems: "center" }}>
+                    <Text
+                      style={{
+                        fontSize: 17,
+                        fontWeight: "400",
+                        color: "#fff",
+                      }}
+                    >
+                      {`${UserProfile.info.star} ⭐`}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        fontWeight: "500",
+                        color: "#fff",
+                      }}
+                    >
+                      Stars
+                    </Text>
+                  </View>
                   <View style={{ alignItems: "center" }}>
                     <Text
                       style={{

@@ -31,6 +31,7 @@ const Registration3 = () => {
   const isAvatarSet = false;
   const isVerified = false;
   const completedRide = 0;
+  const star = 0;
   const currentDate = moment();
   const formattedDate = currentDate.format("YYYY-MM-DD");
   const dateCreated = formattedDate;
@@ -49,7 +50,8 @@ const Registration3 = () => {
     isAvatarSet,
     completedRide,
     dateCreated,
-    imageDataURI
+    imageDataURI,
+    star
   ) => {
     try {
       // Step 1: Create a new user in Firebase Authentication
@@ -101,6 +103,7 @@ const Registration3 = () => {
           completedRide,
           dateCreated,
           imageUrl,
+          star,
         });
       Alert.alert("Success!", "We sent you an email for a confirmation link");
       navigation.navigate("ThankYou");
@@ -307,7 +310,10 @@ const Registration3 = () => {
       </View>
       <TouchableOpacity
         disabled={!isChecked}
-        style={[styles.Next, { backgroundColor: isChecked ? "gray" : "white" }]}
+        style={[
+          styles.Next,
+          { backgroundColor: isChecked ? "#25a45c" : "white" },
+        ]}
         onPress={() => {
           if (ImageData === null) {
             Alert.alert("No Image Found", "Please attach your liscense ID");
@@ -336,7 +342,8 @@ const Registration3 = () => {
             isAvatarSet,
             completedRide,
             dateCreated,
-            ImageData
+            ImageData,
+            star
           );
         }}
       >
@@ -375,7 +382,7 @@ const styles = StyleSheet.create({
     marginLeft: 35,
   },
   loginBtn: {
-    backgroundColor: "gray",
+    backgroundColor: "#8660bf",
     width: "40%",
     paddingVertical: 8,
     marginHorizontal: 15,

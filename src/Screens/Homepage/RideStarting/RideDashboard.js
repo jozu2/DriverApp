@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
+import * as Location from "expo-location";
 
 import { removeLabels } from "./../../../data/mapStyle";
 import Entypo from "react-native-vector-icons/Entypo";
@@ -30,6 +31,7 @@ import ShowProfileDriver from "./../../../component/ShowProfileDriver";
 import { off, onValue, ref, set, remove } from "firebase/database";
 import { db } from "../../../../config";
 import * as Animatable from "react-native-animatable";
+import { useNavigation } from "@react-navigation/native";
 
 const RideDashboard = ({
   driverInfo,
@@ -50,7 +52,7 @@ const RideDashboard = ({
   const dontShowDecliendReq = ongoingRequests.filter(
     (item) => !item.status.isDeclined
   );
-
+  const navigation = useNavigation();
   const userReduxData = useSelector(selectUserProfile);
   const hideProfile = useSelector(selectRequestHide);
   const [showList, setShowList] = useState(false);
@@ -99,12 +101,13 @@ const RideDashboard = ({
       const timeCreated = nowInManila.format("HH:mm:ss");
       const departureTime = status.departureTime;
       const currentTime = timeCreated;
-      console.log(currentTime <= departureTime);
+      const totalPassenger = vehicle.SeatOccupied;
       if (currentTime <= departureTime) {
         const remainingMinutes = calculateTimeDifference(
           currentTime,
           departureTime
         );
+        console.log(totalPassenger);
         const totalSeconds = Math.round(remainingMinutes * 60);
         const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
         const seconds = String(totalSeconds % 60).padStart(2, "0");
@@ -112,7 +115,7 @@ const RideDashboard = ({
         setSeconds(seconds);
       } else {
         console.log("Timer has already passed.");
-        if (acceptedRequests.length <= 0) {
+        if (totalPassenger <= 0) {
           Alert.alert(
             "Ride Deleted",
             "Posting time runs out, please reate a new one"
@@ -120,7 +123,6 @@ const RideDashboard = ({
           const requestDocRef = ref(db, `POSTED_RIDES/${userReduxData.id}`);
           remove(requestDocRef);
         } else {
-          Alert.alert("Ride Started");
           const dataStatus = ref(
             db,
             `POSTED_RIDES/${userReduxData.id}/status/isStarted`
@@ -132,7 +134,61 @@ const RideDashboard = ({
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [status.departureTime]);
+  }, [status.departureTime, vehicle.SeatOccupied]);
+  useEffect(() => {
+    if (!status.isStarted) return;
+
+    const fetchData = async () => {
+      try {
+        const location = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.High,
+        });
+
+        const locationDetails = location;
+
+        if (locationDetails) {
+          mapRef.current.fitToCoordinates(
+            [
+              {
+                latitude: locationDetails.coords.latitude,
+                longitude: locationDetails.coords.longitude,
+              },
+            ],
+            {
+              edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
+              animated: true,
+            }
+          );
+          const originLatitude = ref(
+            db,
+            `POSTED_RIDES/${userReduxData.id}/rideInfo/origin/latitude`
+          );
+          set(originLatitude, locationDetails.coords.latitude);
+
+          const originLongitude = ref(
+            db,
+            `POSTED_RIDES/${userReduxData.id}/rideInfo/origin/longitude`
+          );
+          set(originLongitude, locationDetails.coords.longitude);
+        }
+        console.log(rideInfo.distance);
+
+        if (rideInfo.distance <= 0.3) {
+          navigation.navigate("RideFinish");
+          clearInterval(interval);
+        }
+      } catch (error) {
+        console.error("Error fetching location:", error);
+        clearInterval(interval);
+      }
+    };
+
+    const interval = setInterval(async () => {
+      await fetchData();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [status.isStarted, rideInfo.distance]);
 
   useEffect(() => {
     if (hideProfile) {
@@ -148,8 +204,6 @@ const RideDashboard = ({
     () => {
       if (chat) {
         const dbRef = ref(db, `POSTED_RIDES/${userReduxData.id}/chat/`);
-
-        // Assuming 'messages' is a key within the 'chat' node
         const onDataChanged = (snapshot) => {
           const chatData = snapshot.val();
 
@@ -390,7 +444,7 @@ const RideDashboard = ({
         >
           <MapView
             showsMyLocationButton={false}
-            showsUserLocation={false}
+            showsUserLocation={status.isStarted}
             zoomControlEnabled={false}
             ref={mapRef}
             customMapStyle={removeLabels}
@@ -402,8 +456,8 @@ const RideDashboard = ({
             region={{
               latitude: origin.latitude,
               longitude: origin.longitude,
-              latitudeDelta: 0.031,
-              longitudeDelta: 0.031,
+              latitudeDelta: status.isStarted ? 0.01 : 0.031,
+              longitudeDelta: status.isStarted ? 0.01 : 0.031,
             }}
           >
             <Marker
@@ -424,112 +478,60 @@ const RideDashboard = ({
                 }}
               />
             </Marker>
-            <Marker
-              style={{ width: 200, height: 200 }}
-              coordinate={{
+            {status.isStarted === false && (
+              <Marker
+                style={{ width: 200, height: 200 }}
+                coordinate={{
+                  latitude: origin.latitude,
+                  longitude: origin.longitude,
+                }}
+              >
+                <Image
+                  source={require("./../../../assets/iconOrigin.png")}
+                  style={{
+                    width: 40,
+                    height: 50,
+                    alignSelf: "center",
+                    position: "absolute",
+                    bottom: 0,
+                  }}
+                />
+              </Marker>
+            )}
+            <MapViewDirections
+              origin={{
                 latitude: origin.latitude,
                 longitude: origin.longitude,
               }}
-            >
-              <Image
-                source={require("./../../../assets/iconOrigin.png")}
-                style={{
-                  width: 40,
-                  height: 50,
-                  alignSelf: "center",
-                  position: "absolute",
-                  bottom: 0,
-                }}
-              />
-            </Marker>
-            {!status.isStarted && (
-              <MapViewDirections
-                origin={{
-                  latitude: origin.latitude,
-                  longitude: origin.longitude,
-                }}
-                destination={{
-                  latitude: destinaton.latitude,
-                  longitude: destinaton.longitude,
-                }}
-                waypoints={
-                  waypoints !== null
-                    ? waypoints
-                    : [
-                        {
-                          latitude: origin.latitude,
-                          longitude: origin.longitude,
-                        },
-                      ]
-                }
-                apikey="AIzaSyBVtjPXDhyI3n_xnDYYbX0lOK3zpNQg_1o"
-                strokeWidth={4}
-                strokeColor="#f03f46"
-                onReady={(result) => {
-                  const distance = result.distance || 0;
-                  const duration = result.duration || 0;
-                  const description = result.legs[0].end_address;
+              destination={{
+                latitude: destinaton.latitude,
+                longitude: destinaton.longitude,
+              }}
+              waypoints={
+                waypoints !== null
+                  ? waypoints
+                  : [
+                      {
+                        latitude: origin.latitude,
+                        longitude: origin.longitude,
+                      },
+                    ]
+              }
+              apikey="AIzaSyBVtjPXDhyI3n_xnDYYbX0lOK3zpNQg_1o"
+              strokeWidth={4}
+              strokeColor="#f03f46"
+              onReady={(result) => {
+                const distance = result.distance || 0;
+                const duration = result.duration || 0;
+                const description = result.legs[0].end_address;
 
-                  setRideInfo({
-                    duration: duration,
-                    distance: distance,
-                    description: description,
-                  });
-                  mapRef.current.fitToCoordinates(result.coordinates, {
-                    edgePadding: {
-                      top: 100,
-                      right: 100,
-                      bottom: 5,
-                      left: 5,
-                    },
-                  });
-                }}
-              />
-            )}
-            {status.isStarted && (
-              <MapViewDirections
-                origin={{
-                  latitude: origin.latitude,
-                  longitude: origin.longitude,
-                }}
-                destination={{
-                  latitude: destinaton.latitude,
-                  longitude: destinaton.longitude,
-                }}
-                waypoints={
-                  waypoints !== null
-                    ? waypoints
-                    : [
-                        {
-                          latitude: origin.latitude,
-                          longitude: origin.longitude,
-                        },
-                      ]
-                }
-                apikey="AIzaSyBVtjPXDhyI3n_xnDYYbX0lOK3zpNQg_1o"
-                strokeWidth={4}
-                strokeColor="#8660bf"
-                onReady={(result) => {
-                  const distance = result.distance || 0;
-                  const duration = result.duration || 0;
-                  const description = result.legs[0].end_address;
-
-                  setRideInfo({
-                    duration: duration,
-                    distance: distance,
-                    description: description,
-                  });
-                  mapRef.current.fitToCoordinates(result.coordinates, {
-                    edgePadding: {
-                      top: 30,
-                      right: 30,
-                      bottom: 5,
-                      left: 5,
-                    },
-                  });
-                }}
-              />
-            )}
+                setRideInfo({
+                  duration: duration,
+                  distance: distance,
+                  description: description,
+                });
+              }}
+            />
           </MapView>
         </View>
         <Text

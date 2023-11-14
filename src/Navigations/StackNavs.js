@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 
 import LoadingScreen from "./../component/LoadingScreen";
 import SetAvatar from "../Screens/Homepage/AvatarSetup/SetAvatar";
+import RideFinish from "../Screens/Homepage/RideStarting/RideFinish";
 const StackNav = () => {
   const Stack = createNativeStackNavigator();
   const dispatch = useDispatch();
@@ -80,6 +81,7 @@ const StackNav = () => {
         <Stack.Screen name="SetMeetingPlace" component={SetMeetingPlace} />
         <Stack.Screen name="SetDestination" component={SetDestination} />
         <Stack.Screen name="ViewRoute" component={ViewRoute} />
+        <Stack.Screen name="RideFinish" component={RideFinish} />
       </Stack.Navigator>
     );
   }

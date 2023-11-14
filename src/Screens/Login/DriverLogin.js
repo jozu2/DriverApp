@@ -157,7 +157,7 @@ const DriverLogin = () => {
           marginBottom: 30,
         }}
       />
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Login Driver</Text>
       <Text style={styles.sub}>
         Enter your username and password to login to your driver account
       </Text>
@@ -231,7 +231,9 @@ const DriverLogin = () => {
             navigation.navigate("Registration1");
           }}
         >
-          <Text style={{ fontWeight: "bold" }}>{` Register`}</Text>
+          <Text
+            style={{ fontWeight: "bold", color: "#25a45c" }}
+          >{` Register`}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -247,7 +249,7 @@ const styles = StyleSheet.create({
     bottom: "25%",
   },
   loginBtn: {
-    backgroundColor: "gray",
+    backgroundColor: "#8660bf",
     width: "90%",
     paddingVertical: 8,
     marginVertical: 30,
