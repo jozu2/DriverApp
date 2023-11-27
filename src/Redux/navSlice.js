@@ -14,6 +14,12 @@ const initialState = {
   },
 
   savedImage: null,
+  destinationSchool: {
+    latitude: null,
+    longitude: null,
+    description: null,
+    title: null,
+  },
 
   origin: {
     latitude: null,
@@ -22,6 +28,7 @@ const initialState = {
     title: null,
   },
   waypoints: { latitude: null, longitude: null },
+  waypointsSchool: { latitude: null, longitude: null },
   destination: {
     latitude: null,
     longitude: null,
@@ -71,9 +78,15 @@ export const navSlice = createSlice({
     setDestination: (state, action) => {
       state.destination = action.payload;
     },
+    setDestinationSchool: (state, action) => {
+      state.destinationSchool = action.payload;
+    },
 
     setWaypoints: (state, action) => {
       state.waypoints = action.payload;
+    },
+    setWaypointsSchool: (state, action) => {
+      state.waypointsSchool = action.payload;
     },
     setViewBookings: (state, action) => {
       state.viewBookings = action.payload;
@@ -91,9 +104,11 @@ export const navSlice = createSlice({
 
 export const {
   setRequestHide,
+  setDestinationSchool,
   setRegistrationInfo,
   setSavedImage,
   setOrigin,
+  setWaypointsSchool,
   setDestination,
   setWaypoints,
   setViewBookings,
@@ -101,7 +116,9 @@ export const {
   setCreatedRideInfo,
 } = navSlice.actions;
 export const selectRequestHide = (state) => state.nav.requestHide;
+export const selectDestinationSchool = (state) => state.nav.destinationSchool;
 export const selectRegistrationInfo = (state) => state.nav.registrationInfo;
+export const selectWaypointsSchool = (state) => state.nav.waypointsSchool;
 export const selectOrigin = (state) => state.nav.origin;
 export const selectSavedImage = (state) => state.nav.savedImage;
 export const selectDestination = (state) => state.nav.destination;

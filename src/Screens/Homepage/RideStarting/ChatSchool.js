@@ -21,9 +21,9 @@ import {
   selectSaveDriverId,
   selectUserProfile,
   setRequestHide,
-} from "./../../../Redux/navSlice";
+} from "../../../Redux/navSlice";
 import { debounce } from "lodash";
-import { db } from "./../../../../config";
+import { db } from "../../../../config";
 import { useRef } from "react";
 
 const Chat = () => {
@@ -42,7 +42,10 @@ const Chat = () => {
   const formatter = new Intl.DateTimeFormat("en-PH", options);
 
   useEffect(() => {
-    const chatRef = ref(db, `POSTED_RIDES/${driverReduxData.id}/chat`);
+    const chatRef = ref(
+      db,
+      `POSTED_RIDES_TO_SCHOOL/${driverReduxData.id}/chat`
+    );
 
     const onMessageAdded = (snapshot) => {
       const message = snapshot.val();
@@ -66,7 +69,10 @@ const Chat = () => {
       timestamp: serverTimestamp(),
     };
 
-    push(ref(db, `POSTED_RIDES/${driverReduxData.id}/chat`), newMessage)
+    push(
+      ref(db, `POSTED_RIDES_TO_SCHOOL/${driverReduxData.id}/chat`),
+      newMessage
+    )
       .then(() => {
         console.log("Message sent successfully");
         setInputText("");
@@ -167,11 +173,9 @@ const Chat = () => {
                   style={{
                     borderWidth: 1.5,
                     borderColor: "black",
-
                     width: 37,
                     height: 37,
                     backgroundColor: "#ebebeb",
-
                     borderRadius: 50,
                   }}
                 />
@@ -218,7 +222,6 @@ const styles = StyleSheet.create({
   },
   sendButton: {
     backgroundColor: "#202020",
-
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,
@@ -227,7 +230,6 @@ const styles = StyleSheet.create({
   },
   sendButtonText: {
     color: "#fbd306",
-
     fontWeight: "bold",
   },
 });

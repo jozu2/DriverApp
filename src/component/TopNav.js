@@ -39,7 +39,7 @@ export default TopNav;
 
 const styles = StyleSheet.create({
   topBar: {
-    backgroundColor: "#1e1f22",
+    backgroundColor: "#131313",
     width: "100%",
     paddingTop: "5%",
     paddingBottom: "5%",

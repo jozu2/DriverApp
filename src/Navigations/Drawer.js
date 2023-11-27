@@ -16,8 +16,8 @@ const Drawer = () => {
         drawerContent={(props) => <CustomDrawer {...props} />}
         screenOptions={{
           headerShown: false,
-          drawerActiveBackgroundColor: "#8660bf",
-          drawerActiveTintColor: "white",
+          drawerActiveBackgroundColor: "#fbd306",
+          drawerActiveTintColor: "black",
           drawerInactiveTintColor: "black",
           drawerLabelStyle: { marginLeft: -18 },
         }}

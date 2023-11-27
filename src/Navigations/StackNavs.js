@@ -16,6 +16,9 @@ import { useDispatch } from "react-redux";
 import LoadingScreen from "./../component/LoadingScreen";
 import SetAvatar from "../Screens/Homepage/AvatarSetup/SetAvatar";
 import RideFinish from "../Screens/Homepage/RideStarting/RideFinish";
+import SetDestinationToSchool from "../Screens/CreateARide/SetDestinationToSchool";
+import ViewRouteSchool from "../Screens/CreateARide/ViewRouteSchool";
+import RideFinishSchool from "../Screens/Homepage/RideStarting/RideFinishSchool";
 const StackNav = () => {
   const Stack = createNativeStackNavigator();
   const dispatch = useDispatch();
@@ -80,8 +83,14 @@ const StackNav = () => {
         <Stack.Screen name="CreateARide" component={CreateARide} />
         <Stack.Screen name="SetMeetingPlace" component={SetMeetingPlace} />
         <Stack.Screen name="SetDestination" component={SetDestination} />
+        <Stack.Screen
+          name="SetDestinationToSchool"
+          component={SetDestinationToSchool}
+        />
         <Stack.Screen name="ViewRoute" component={ViewRoute} />
+        <Stack.Screen name="ViewRouteSchool" component={ViewRouteSchool} />
         <Stack.Screen name="RideFinish" component={RideFinish} />
+        <Stack.Screen name="RideFinishSchool" component={RideFinishSchool} />
       </Stack.Navigator>
     );
   }

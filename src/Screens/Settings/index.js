@@ -47,7 +47,7 @@ const Settings = () => {
 
       <Text
         style={{
-          color: "#8660bf",
+          color: "#fbd306",
           marginTop: 30,
           fontSize: 24,
           fontWeight: "500",

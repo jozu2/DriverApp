@@ -96,7 +96,7 @@ const SetDestination = () => {
         <>
           <View
             style={{
-              backgroundColor: "#313338",
+              backgroundColor: "#202020",
               position: "absolute",
               bottom: 0,
               alignSelf: "center",
@@ -127,7 +127,6 @@ const SetDestination = () => {
                 source={pressedMarkerPic.img1}
                 style={{
                   borderWidth: 2,
-                  borderColor: "#25a45c",
                   borderRadius: 5,
                   width: "100%",
                   height: "100%",
@@ -156,7 +155,6 @@ const SetDestination = () => {
                 style={{
                   borderRadius: 5,
                   borderWidth: 2,
-                  borderColor: "#25a45c",
                   width: "100%",
                   height: "100%",
                   alignSelf: "center",
@@ -186,7 +184,7 @@ const SetDestination = () => {
                 flexDirection: "row",
                 justifyContent: "center",
                 borderRadius: 22,
-                backgroundColor: "#8660bf",
+                backgroundColor: "#fbd306",
                 alignSelf: "flex-end",
                 marginRight: 5,
                 width: "60%",
@@ -210,12 +208,12 @@ const SetDestination = () => {
                   fontWeight: "400",
                   fontSize: 18,
                   paddingRight: 2,
-                  color: "#fff",
+                  color: "#202020",
                 }}
               >
                 Set Destination
               </Text>
-              <MaterialIcons name="done" size={25} color={"#fff"} />
+              <MaterialIcons name="done" size={25} color={"#202020"} />
             </TouchableOpacity>
           </View>
         </>

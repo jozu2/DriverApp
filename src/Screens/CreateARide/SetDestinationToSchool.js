@@ -12,32 +12,17 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { setOrigin } from "../../Redux/navSlice";
-import { markers } from "../../data/meetingPlaceEndpoints";
+import {
+  setDestination,
+  setDestinationSchool,
+  setOrigin,
+} from "../../Redux/navSlice";
+import { markers } from "../../data/destinationEndpoints";
+import { mapDarkStyle } from "../../data/mapStyle";
 import TopNav from "../../component/TopNav";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const mapDarkStyle = [
-  {
-    featureType: "poi.business",
-    stylers: [
-      {
-        visibility: "off",
-      },
-    ],
-  },
-  {
-    featureType: "poi.park",
-    elementType: "labels.text",
-    stylers: [
-      {
-        visibility: "off",
-      },
-    ],
-  },
-];
-
-const SetMeetingPlace = () => {
+const SetDestinationToSchool = () => {
   const mapRef = useRef(null);
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -63,7 +48,7 @@ const SetMeetingPlace = () => {
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#313338",
+          backgroundColor: "#313133",
         }}
       >
         <MapView
@@ -77,10 +62,10 @@ const SetMeetingPlace = () => {
             zIndex: -2,
           }}
           region={{
-            latitude: 14.9973,
-            longitude: 120.655,
-            latitudeDelta: 0.0061,
-            longitudeDelta: 0.0061,
+            latitude: 14.9996518,
+            longitude: 120.6513158,
+            latitudeDelta: 0.0541,
+            longitudeDelta: 0.0541,
           }}
         >
           {markers.map((marker) => (
@@ -88,7 +73,6 @@ const SetMeetingPlace = () => {
               key={marker.id}
               coordinate={marker.coordinate}
               title={marker.title}
-              description={marker.description}
               pinColor="#f03f46"
               onPress={() => {
                 setPressedMarkerPic({
@@ -146,8 +130,8 @@ const SetMeetingPlace = () => {
               <Image
                 source={pressedMarkerPic.img1}
                 style={{
-                  borderRadius: 5,
                   borderWidth: 2,
+                  borderRadius: 5,
                   width: "100%",
                   height: "100%",
                   alignSelf: "center",
@@ -206,14 +190,14 @@ const SetMeetingPlace = () => {
                 borderRadius: 22,
                 backgroundColor: "#fbd306",
                 alignSelf: "flex-end",
-                marginRight: 25,
-                width: "50%",
+                marginRight: 5,
+                width: "60%",
                 paddingVertical: 9,
                 marginBottom: 5,
               }}
               onPress={() => {
                 dispatch(
-                  setOrigin({
+                  setDestinationSchool({
                     latitude: takeMarkerCoordinates.latitude,
                     longitude: takeMarkerCoordinates.longitude,
                     description: takeMarkerCoordinates.description,
@@ -231,7 +215,7 @@ const SetMeetingPlace = () => {
                   color: "#202020",
                 }}
               >
-                Set Place
+                Set Destination
               </Text>
               <MaterialIcons name="done" size={25} color={"#202020"} />
             </TouchableOpacity>
@@ -278,6 +262,6 @@ const SetMeetingPlace = () => {
   );
 };
 
-export default SetMeetingPlace;
+export default SetDestinationToSchool;
 
 const styles = StyleSheet.create({});

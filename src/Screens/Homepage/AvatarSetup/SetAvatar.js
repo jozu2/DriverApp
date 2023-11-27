@@ -30,9 +30,11 @@ const SetAvatar = () => {
     const newItem = {
       profilePic: imageURL,
     };
+
     const updatedData = {
       isAvatarSet: true,
     };
+
     const docRef = db.collection("drivers").doc(gender.id);
     docRef
       .update(newItem)

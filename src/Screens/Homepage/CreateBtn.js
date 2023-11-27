@@ -161,21 +161,28 @@ const CreateBtn = () => {
           <View style={styles.wl2}></View>
           <View style={styles.wl3}></View>
           <View style={styles.wl4}></View>
-          <AntDesign name="plus" color={"gray"} size={80} style={styles.Icon} />
+          <AntDesign
+            name="plus"
+            color={"#fbd306"}
+            size={80}
+            style={styles.Icon}
+          />
         </TouchableOpacity>
       )}
       <Text
         style={{
           fontSize: 30,
-          fontWeight: "500",
+          fontWeight: "300",
           textAlign: "center",
-          color: activeIndicator ? "#ebebeb" : "#fff",
-          backgroundColor: activeIndicator ? "transparent" : "#8660bf",
+          color: activeIndicator ? "#ebebeb" : "#fbd306",
           paddingVertical: 10,
           borderRadius: 10,
+          position: "absolute",
+          bottom: -120,
+          alignSelf: "center",
         }}
       >
-        {activeIndicator ? "Loading . . ." : "CREATE A RIDE"}
+        {activeIndicator ? "Loading . . ." : "Create a Ride"}
       </Text>
     </View>
   );
@@ -185,7 +192,7 @@ export default CreateBtn;
 
 const styles = StyleSheet.create({
   wl: {
-    backgroundColor: "#313338",
+    backgroundColor: "#617086",
 
     width: 200,
     height: 20,
@@ -195,7 +202,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   wl2: {
-    backgroundColor: "#313338",
+    backgroundColor: "#617086",
 
     width: 200,
     height: 20,
@@ -205,7 +212,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   wl3: {
-    backgroundColor: "#313338",
+    backgroundColor: "#617086",
 
     width: 20,
     height: 200,
@@ -217,7 +224,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   wl4: {
-    backgroundColor: "#313338",
+    backgroundColor: "#617086",
 
     width: 20,
     height: 200,
@@ -234,7 +241,7 @@ const styles = StyleSheet.create({
     height: 280,
     borderRadius: 25,
     borderWidth: 5,
-    borderColor: "#ebebeb",
+    borderColor: "#fff",
     backgroundColor: "transparent",
     display: "flex",
     justifyContent: "center",

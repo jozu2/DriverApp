@@ -51,12 +51,19 @@ const Registration1 = () => {
     } else {
       setErrorName(false);
     }
+
     if (confirmPass !== "") {
       if (pass !== confirmPass) {
         setShowErrorPass(true);
       } else {
         setShowErrorPass(false);
       }
+    } else {
+      setShowErrorPass(false);
+    }
+
+    if (pass !== confirmPass) {
+      setShowErrorPass(true);
     } else {
       setShowErrorPass(false);
     }

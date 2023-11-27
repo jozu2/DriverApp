@@ -17,29 +17,30 @@ import moment from "moment-timezone";
 import { Picker } from "@react-native-picker/picker";
 import {
   selectDestination,
+  selectDestinationSchool,
   selectOrigin,
   selectUserProfile,
   selectWaypoints,
+  selectWaypointsSchool,
   setWaypoints,
+  setWaypointsSchool,
 } from "../../Redux/navSlice";
-import { vehicles, colors } from "./../../data/colors";
+import { vehicles, colors } from "../../data/colors";
 import { ActivityIndicator } from "react-native";
 import { ref, set } from "firebase/database";
 import { db } from "../../../config";
-const RegisterRideModal = () => {
+const RegisterRideModalSchool = () => {
   const navigation = useNavigation();
   const [numberOfPassenger, setNumberOfPassenger] = useState(null);
   const [showSaveBtn, setShowSaveBtn] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const dispatch = useDispatch();
-  const destinationData = useSelector(selectDestination);
-  const originData = useSelector(selectOrigin);
-  const waypoints = useSelector(selectWaypoints);
+  const destinationData = useSelector(selectDestinationSchool);
+  const waypoints = useSelector(selectWaypointsSchool);
   const driverData = useSelector(selectUserProfile);
   const [isLoading, setIsloading] = useState(false);
   useEffect(() => {
-    const origindes = originData.title;
     const destinationdes = destinationData.description;
     console.log(destinationdes);
 
@@ -53,8 +54,7 @@ const RegisterRideModal = () => {
     if (
       selectedVehicle !== null &&
       numberOfPassenger !== null &&
-      destinationdes !== null &&
-      origindes
+      destinationdes !== null
     ) {
       setShowSaveBtn(true);
     } else {
@@ -64,7 +64,6 @@ const RegisterRideModal = () => {
     selectedColor,
     selectedVehicle,
     numberOfPassenger,
-    originData.title,
     destinationData.title,
     dispatch,
   ]);
@@ -114,10 +113,10 @@ const RegisterRideModal = () => {
           <TouchableOpacity
             style={[
               styles.inputText,
-              { backgroundColor: "#fbd306", paddingVertical: 10 },
+              { backgroundColor: "#fff", paddingVertical: 10 },
             ]}
             onPress={() => {
-              navigation.navigate("SetMeetingPlace");
+              navigation.navigate("SetDestinationToSchool");
             }}
           >
             <Text
@@ -128,12 +127,12 @@ const RegisterRideModal = () => {
                 textAlign: "center",
               }}
             >
-              {originData.description === null ? "" : `Meeting spot: `}
-              {originData.description == null
+              {destinationData.description === null ? "" : `Meeting spot: `}
+              {destinationData.description == null
                 ? "Select Meeting Point"
-                : `${originData.title} - `}
+                : `${destinationData.title} - `}
 
-              {originData.description == null ? (
+              {destinationData.description == null ? (
                 ""
               ) : (
                 <Text
@@ -263,19 +262,16 @@ const RegisterRideModal = () => {
             </View>
           </View>
 
-          <TouchableOpacity
+          <View
             style={[
               styles.inputText,
               {
-                backgroundColor: "#fff",
+                backgroundColor: "#fbd306",
                 paddingVertical: 10,
                 borderRadius: 30,
                 marginBottom: 25,
               },
             ]}
-            onPress={() => {
-              navigation.navigate("SetDestination");
-            }}
           >
             <Text
               style={{
@@ -285,26 +281,9 @@ const RegisterRideModal = () => {
                 textAlign: "center",
               }}
             >
-              {destinationData.description == null ? "" : `Destination: `}
-              {destinationData.description == null
-                ? "Choose Destination"
-                : `${destinationData.title} - `}
-
-              {destinationData.description == null ? (
-                ""
-              ) : (
-                <Text
-                  style={{
-                    textDecorationLine: "underline",
-                    fontSize: 13,
-                    color: "#121212",
-                  }}
-                >
-                  {`Edit`} <Feather name="edit-2" size={12} color={"#121212"} />
-                </Text>
-              )}
+              {`Destination: Don Honorio Ventura State University`}
             </Text>
-          </TouchableOpacity>
+          </View>
 
           {showSaveBtn && (
             <View
@@ -326,14 +305,14 @@ const RegisterRideModal = () => {
                 }}
                 onPress={() => {
                   dispatch(
-                    setWaypoints([
+                    setWaypointsSchool([
                       {
-                        latitude: originData.latitude,
-                        longitude: originData.longitude,
+                        latitude: destinationData.latitude,
+                        longitude: destinationData.longitude,
                       },
                     ])
                   );
-                  navigation.navigate("ViewRoute");
+                  navigation.navigate("ViewRouteSchool");
                 }}
               >
                 <Text
@@ -362,21 +341,21 @@ const RegisterRideModal = () => {
                     .format("HH:mm:ss");
                   const timeCreated = nowInManila.format("HH:mm:ss");
                   try {
-                    set(ref(db, "POSTED_RIDES/" + driverData.id), {
+                    set(ref(db, "POSTED_RIDES_TO_SCHOOL/" + driverData.id), {
                       rideInfo: {
                         origin: {
-                          latitude: originData.latitude,
-                          longitude: originData.longitude,
-                          description: originData.description,
-                          title: originData.title,
+                          latitude: destinationData.latitude,
+                          longitude: destinationData.longitude,
+                          description: destinationData.description,
+                          title: destinationData.title,
                         },
 
                         waypoints: waypoints,
                         destination: {
-                          title: destinationData.title,
-                          latitude: destinationData.latitude,
-                          longitude: destinationData.longitude,
-                          description: destinationData.description,
+                          latitude: 14.9978,
+                          longitude: 120.656,
+                          description: "Don Honorio Ventura State University",
+                          title: "DHVSU",
                         },
                         vehicle: {
                           typeOfVehichle: selectedVehicle,
@@ -436,7 +415,7 @@ const RegisterRideModal = () => {
   }
 };
 
-export default RegisterRideModal;
+export default RegisterRideModalSchool;
 
 const styles = StyleSheet.create({
   content: {

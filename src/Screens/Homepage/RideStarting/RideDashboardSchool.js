@@ -11,14 +11,14 @@ import {
 import EvilIcons from "react-native-vector-icons/EvilIcons";
 import * as Location from "expo-location";
 
-import { removeLabels } from "./../../../data/mapStyle";
+import { removeLabels } from "../../../data/mapStyle";
 import Entypo from "react-native-vector-icons/Entypo";
 import Octicons from "react-native-vector-icons/Octicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import React, { useEffect, useRef, useState } from "react";
 import MapViewDirections from "react-native-maps-directions";
-import ShowList from "./ShowList";
-import Chat from "./Chat";
+import ShowListSchool from "./ShowListSchool";
+import Chat from "./ChatSchool";
 import moment, { now } from "moment-timezone";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -27,13 +27,14 @@ import {
   setRequestHide,
 } from "../../../Redux/navSlice";
 import RideInfoModal from "./RideInfoModal";
-import ShowProfileDriver from "./../../../component/ShowProfileDriver";
+import ShowProfileDriver from "../../../component/ShowProfileDriver";
 import { off, onValue, ref, set, remove } from "firebase/database";
 import { db } from "../../../../config";
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
+import ShowProfileDriverSchool from "../../../component/ShowProfileDriverSchool";
 
-const RideDashboard = ({
+const RideDashboardSchool = ({
   driverInfo,
   origin,
   destinaton,
@@ -107,7 +108,6 @@ const RideDashboard = ({
           currentTime,
           departureTime
         );
-        console.log(totalPassenger);
         const totalSeconds = Math.round(remainingMinutes * 60);
         const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
         const seconds = String(totalSeconds % 60).padStart(2, "0");
@@ -120,12 +120,15 @@ const RideDashboard = ({
             "Ride Deleted",
             "Posting time runs out, please create a new one"
           );
-          const requestDocRef = ref(db, `POSTED_RIDES/${userReduxData.id}`);
+          const requestDocRef = ref(
+            db,
+            `POSTED_RIDES_TO_SCHOOL/${userReduxData.id}`
+          );
           remove(requestDocRef);
         } else {
           const dataStatus = ref(
             db,
-            `POSTED_RIDES/${userReduxData.id}/status/isStarted`
+            `POSTED_RIDES_TO_SCHOOL/${userReduxData.id}/status/isStarted`
           );
           set(dataStatus, true);
         }
@@ -161,27 +164,28 @@ const RideDashboard = ({
           );
           const originLatitude = ref(
             db,
-            `POSTED_RIDES/${userReduxData.id}/rideInfo/origin/latitude`
+            `POSTED_RIDES_TO_SCHOOL/${userReduxData.id}/rideInfo/origin/latitude`
           );
           set(originLatitude, locationDetails.coords.latitude);
 
           const originLongitude = ref(
             db,
-            `POSTED_RIDES/${userReduxData.id}/rideInfo/origin/longitude`
+            `POSTED_RIDES_TO_SCHOOL/${userReduxData.id}/rideInfo/origin/longitude`
           );
           set(originLongitude, locationDetails.coords.longitude);
         }
+
         const statusRef = ref(
           db,
-          `POSTED_RIDES/${userReduxData.id}/status/distance`
+          `POSTED_RIDES_TO_SCHOOL/${userReduxData.id}/status/distance`
         );
         set(statusRef, rideInfo.distance);
 
         if (status.distance !== null) {
           console.log(status.distance <= 0.5);
-          if (status.distance <= 0.7) {
+          if (status.distance <= 0.8) {
             console.log("done!!!!!!!!!!!!!!!!!!");
-            navigation.navigate("RideFinish");
+            navigation.navigate("RideFinishSchool");
             clearInterval(interval);
           }
         }
@@ -196,7 +200,7 @@ const RideDashboard = ({
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [status.isStarted, rideInfo, rideInfo.distance]);
+  }, [status.isStarted, rideInfo.distance]);
 
   useEffect(() => {
     if (hideProfile) {
@@ -211,7 +215,10 @@ const RideDashboard = ({
   useEffect(
     () => {
       if (chat) {
-        const dbRef = ref(db, `POSTED_RIDES/${userReduxData.id}/chat/`);
+        const dbRef = ref(
+          db,
+          `POSTED_RIDES_TO_SCHOOL/${userReduxData.id}/chat/`
+        );
         const onDataChanged = (snapshot) => {
           const chatData = snapshot.val();
 
@@ -242,7 +249,7 @@ const RideDashboard = ({
     >
       {showList && (
         <>
-          <ShowList
+          <ShowListSchool
             request={dontShowDecliendReq}
             driverID={DriverIDForRequest}
             vehicle={vehicle}
@@ -298,7 +305,7 @@ const RideDashboard = ({
       )}
       {showAcceptedUser && (
         <>
-          <ShowProfileDriver
+          <ShowProfileDriverSchool
             data={savedAcceptedUserData}
             vehicle={vehicle}
             status={status}
@@ -621,7 +628,7 @@ const RideDashboard = ({
                         if (userReduxData.id) {
                           const rideData = ref(
                             db,
-                            `POSTED_RIDES/${userReduxData.id}`
+                            `POSTED_RIDES_TO_SCHOOL/${userReduxData.id}`
                           );
                           await remove(rideData);
                         } else {
@@ -662,7 +669,7 @@ const RideDashboard = ({
             onPress={() => {
               const dataStatus = ref(
                 db,
-                `POSTED_RIDES/${userReduxData.id}/status/isStarted`
+                `POSTED_RIDES_TO_SCHOOL/${userReduxData.id}/status/isStarted`
               );
               set(dataStatus, true);
             }}
@@ -693,4 +700,4 @@ const RideDashboard = ({
   );
 };
 
-export default RideDashboard;
+export default RideDashboardSchool;

@@ -220,7 +220,7 @@ const DriverLogin = () => {
           loginDriver(email, password);
         }}
       >
-        <Text style={{ fontSize: 20, textAlign: "center", color: "#fff" }}>
+        <Text style={{ fontSize: 20, textAlign: "center", color: "#202020" }}>
           Login
         </Text>
       </TouchableOpacity>
@@ -232,7 +232,7 @@ const DriverLogin = () => {
           }}
         >
           <Text
-            style={{ fontWeight: "bold", color: "#25a45c" }}
+            style={{ fontWeight: "bold", color: "#617086" }}
           >{` Register`}</Text>
         </TouchableOpacity>
       </View>
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     bottom: "25%",
   },
   loginBtn: {
-    backgroundColor: "#8660bf",
+    backgroundColor: "#fbd306",
     width: "90%",
     paddingVertical: 8,
     marginVertical: 30,

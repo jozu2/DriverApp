@@ -69,7 +69,7 @@ const DriverProfile = () => {
                 borderRadius: 5000,
                 alignSelf: "center",
                 borderWidth: 4,
-                borderColor: "#8660bf",
+                borderColor: "#fbd306",
                 zIndex: 10,
               }}
             />
@@ -118,7 +118,7 @@ const DriverProfile = () => {
             </View>
             <View
               style={{
-                backgroundColor: "#8660bf",
+                backgroundColor: "#617086",
                 width: "90%",
                 alignSelf: "center",
                 borderRadius: 10,

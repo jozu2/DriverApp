@@ -9,12 +9,15 @@ import CreateBtn from "./CreateBtn";
 import TopNav from "../../component/TopNav";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RideDashboard from "./RideStarting/RideDashboard";
+import RideDashboardSchool from "./RideStarting/RideDashboardSchool";
 const DriverDashboard = () => {
   const driverProfile = useSelector(selectUserProfile);
   const [fetchedData, setFetchedData] = useState(null);
+  const [fetchedDataToSchool, setFetchedDataToSchool] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hideCreateRideBtn, setHideCreateRideBtn] = useState(false);
-
+  console.log("yyyy", fetchedData);
+  console.log("xxxx", fetchedDataToSchool);
   useEffect(() => {
     const dbRef = ref(db, `POSTED_RIDES/${driverProfile.id}`);
 
@@ -25,9 +28,9 @@ const DriverDashboard = () => {
         console.log("No data found for driver ID:", driverProfile.id);
         setIsLoading(false);
         setHideCreateRideBtn(false);
+        setFetchedData(null);
         return;
       }
-
       setFetchedData(requestData);
       setHideCreateRideBtn(true);
 
@@ -44,6 +47,37 @@ const DriverDashboard = () => {
 
     return () => off(dbRef, "value", onDataChange);
   }, [driverProfile.id]);
+
+  useEffect(() => {
+    const dbRefSchool = ref(db, `POSTED_RIDES_TO_SCHOOL/${driverProfile.id}`);
+    const onDataChange = (snapshot) => {
+      const requestData = snapshot.val();
+
+      if (!requestData) {
+        console.log("No data found for driver ID:", driverProfile.id);
+        setIsLoading(false);
+        setHideCreateRideBtn(false);
+        setFetchedDataToSchool(null);
+
+        return;
+      }
+
+      setFetchedDataToSchool(requestData);
+      setHideCreateRideBtn(true);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1100);
+    };
+
+    const errorCallback = (error) => {
+      console.error("Error:", error);
+    };
+
+    onValue(dbRefSchool, onDataChange, errorCallback);
+
+    return () => off(dbRefSchool, "value", onDataChange);
+  }, [driverProfile.id]);
+
   if (isLoading) {
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -76,6 +110,24 @@ const DriverDashboard = () => {
             }
           />
         )}
+        {hideCreateRideBtn && fetchedDataToSchool !== null && (
+          <RideDashboardSchool
+            driverInfo={fetchedDataToSchool.driverInfo}
+            origin={fetchedDataToSchool.rideInfo.origin}
+            destinaton={fetchedDataToSchool.rideInfo.destination}
+            vehicle={fetchedDataToSchool.rideInfo.vehicle}
+            status={fetchedDataToSchool.status}
+            request={
+              fetchedDataToSchool.request ? fetchedDataToSchool.request : null
+            }
+            chat={fetchedDataToSchool.chat ? fetchedDataToSchool.chat : null}
+            waypoints={
+              fetchedDataToSchool.rideInfo.waypoints
+                ? fetchedDataToSchool.rideInfo.waypoints
+                : null
+            }
+          />
+        )}
       </View>
     </SafeAreaView>
   );
@@ -88,6 +140,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#313338",
+    backgroundColor: "#617086",
   },
 });

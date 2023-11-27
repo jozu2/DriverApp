@@ -64,15 +64,15 @@ const CustomDrawer = (props) => {
               width: 80,
               borderRadius: 500,
               marginBottom: 10,
-              backgroundColor: "gray",
+              backgroundColor: "#fbd306",
               borderWidth: 2,
-              borderColor: "#8660bf",
+              borderColor: "#fbd306",
             }}
           />
 
           {!FName ? (
             <View style={{ paddingLeft: 15 }}>
-              <Text style={{ color: "#fff", fontSize: 17 }}>{fullName}</Text>
+              <Text style={{ color: "#fbd306", fontSize: 17 }}>{fullName}</Text>
               <Text style={{ color: "#fff", fontSize: 12 }}>{driverID}</Text>
             </View>
           ) : null}
@@ -86,11 +86,18 @@ const CustomDrawer = (props) => {
               borderWidth: 1,
               width: "70%",
               alignSelf: "center",
+              backgroundColor: "#696969",
               borderRadius: 10,
             }}
             onPress={handleLogout}
           >
-            <Text style={{ alignSelf: "center", paddingVertical: 8 }}>
+            <Text
+              style={{
+                alignSelf: "center",
+                paddingVertical: 8,
+                color: "#fbd306",
+              }}
+            >
               LOGOUT
             </Text>
           </TouchableOpacity>

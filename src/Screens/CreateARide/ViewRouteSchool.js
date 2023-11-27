@@ -7,23 +7,28 @@ import { useNavigation } from "@react-navigation/native";
 import { mapDarkStyle } from "../../data/mapStyle";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectDestination,
-  selectOrigin,
+  selectDestinationSchool,
   selectWaypoints,
-  setWaypoints,
+  selectWaypointsSchool,
+  setWaypointsSchool,
 } from "../../Redux/navSlice";
 import MapViewDirections from "react-native-maps-directions";
 
-const ViewRoute = () => {
+const ViewRouteSchool = () => {
   const mapRef = useRef(null);
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const destinationData = useSelector(selectDestination);
-  const originData = useSelector(selectOrigin);
+  const destinationData = {
+    latitude: 14.9978,
+    longitude: 120.656,
+    description: "Don Honorio Ventura State University",
+    title: "DHVSU",
+  };
+  const originData = useSelector(selectDestinationSchool);
   const [editModeOn, setEditModeOn] = useState(false);
   const [showMapDir, setShowMapDir] = useState(false);
   const [saveClicked, setSavedClicked] = useState(false);
-  const waypointRedux = useSelector(selectWaypoints);
+  const waypointRedux = useSelector(selectWaypointsSchool);
   const [centerLocation, setCenterLocation] = useState({
     latitude: null,
     longitude: null,
@@ -253,7 +258,7 @@ const ViewRoute = () => {
             borderRadius: 10,
           }}
           onPress={() => {
-            dispatch(setWaypoints(waypointsArray));
+            dispatch(setWaypointsSchool(waypointsArray));
             setSavedClicked(true);
             setEditModeOn(false);
           }}
@@ -274,6 +279,6 @@ const ViewRoute = () => {
   );
 };
 
-export default ViewRoute;
+export default ViewRouteSchool;
 
 const styles = StyleSheet.create({});
