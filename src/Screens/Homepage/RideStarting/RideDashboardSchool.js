@@ -1,4 +1,4 @@
-import MapView, { Marker, Polyline } from "react-native-maps";
+import MapView, { Circle, Marker, Polyline } from "react-native-maps";
 import {
   Alert,
   Image,
@@ -138,6 +138,22 @@ const RideDashboardSchool = ({
 
     return () => clearInterval(interval);
   }, [status.departureTime, vehicle.SeatOccupied]);
+
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * (Math.PI / 180)) *
+        Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c;
+    return distance;
+  };
+
   useEffect(() => {
     if (!status.isStarted) return;
 
@@ -182,13 +198,40 @@ const RideDashboardSchool = ({
         set(statusRef, rideInfo.distance);
 
         if (status.distance !== null) {
-          console.log(status.distance <= 0.5);
-          if (status.distance <= 0.8) {
-            console.log("done!!!!!!!!!!!!!!!!!!");
-            navigation.navigate("RideFinishSchool");
-            clearInterval(interval);
+          if (location) {
+            console.log(location.coords.latitude);
+            const currentLat = location.coords.latitude;
+            const currentLon = location.coords.longitude;
+            const targetLat = destinaton.latitude;
+            const targetLon = destinaton.longitude;
+            const distance = calculateDistance(
+              currentLat,
+              currentLon,
+              targetLat,
+              targetLon
+            );
+            if (distance <= 0.01) {
+              console.log("done!");
+              navigation.navigate("RideFinishSchool");
+              clearInterval(interval);
+            } else {
+              // setActiveIndicator(false);
+              // Alert.alert(
+              //   "Sorry You Can't Create a Ride",
+              //   "Creating a ride is only allowed when you are within the campus vicinity"
+              // );
+            }
+          } else {
+            // setActiveIndicator(false);
+
+            Alert.alert("Error getting location. Please try again.");
           }
         }
+        // if (status.distance <= 0.8) {
+        //   console.log("done!!!!!!!!!!!!!!!!!!");
+        //   navigation.navigate("RideFinishSchool");
+        //   clearInterval(interval);
+        // }
       } catch (error) {
         console.error("Error fetching location:", error);
         clearInterval(interval);
@@ -475,6 +518,16 @@ const RideDashboardSchool = ({
               longitudeDelta: status.isStarted ? 0.01 : 0.031,
             }}
           >
+            <Circle
+              center={{
+                latitude: destinaton.latitude,
+                longitude: destinaton.longitude,
+              }}
+              radius={10} // 100 meters
+              strokeWidth={2}
+              strokeColor="rgba(255,0,0,0.5)"
+              fillColor="rgba(255,0,0,0.2)"
+            />
             <Marker
               style={{ width: 200, height: 200 }}
               coordinate={{
@@ -644,7 +697,7 @@ const RideDashboardSchool = ({
             }}
             style={{
               width: "30%",
-              backgroundColor: "#f03f46",
+              backgroundColor: "#1e1f22",
               borderRadius: 30,
               alignSelf: "flex-end",
               marginRight: 20,
@@ -675,7 +728,7 @@ const RideDashboardSchool = ({
             }}
             style={{
               width: "30%",
-              backgroundColor: "#8660bf",
+              backgroundColor: "#fbd306",
               borderRadius: 30,
               alignSelf: "flex-end",
               marginRight: 20,
@@ -686,7 +739,7 @@ const RideDashboardSchool = ({
               style={{
                 fontSize: 18,
                 textAlign: "center",
-                color: "#ebebeb",
+                color: "#121212",
                 paddingVertical: 12,
                 fontWeight: "bold",
               }}

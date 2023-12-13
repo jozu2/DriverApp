@@ -637,7 +637,7 @@ const RideDashboard = ({
             }}
             style={{
               width: "30%",
-              backgroundColor: "#f03f46",
+              backgroundColor: "#1e1f22",
               borderRadius: 30,
               alignSelf: "flex-end",
               marginRight: 20,
@@ -668,7 +668,7 @@ const RideDashboard = ({
             }}
             style={{
               width: "30%",
-              backgroundColor: "#8660bf",
+              backgroundColor: "#fbd306",
               borderRadius: 30,
               alignSelf: "flex-end",
               marginRight: 20,
@@ -679,7 +679,7 @@ const RideDashboard = ({
               style={{
                 fontSize: 18,
                 textAlign: "center",
-                color: "#ebebeb",
+                color: "#121212",
                 paddingVertical: 12,
                 fontWeight: "bold",
               }}

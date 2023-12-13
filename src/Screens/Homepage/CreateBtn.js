@@ -174,7 +174,7 @@ const CreateBtn = () => {
           fontSize: 30,
           fontWeight: "300",
           textAlign: "center",
-          color: activeIndicator ? "#ebebeb" : "#fbd306",
+          color: activeIndicator ? "#ebebeb" : "#1e1f22",
           paddingVertical: 10,
           borderRadius: 10,
           position: "absolute",

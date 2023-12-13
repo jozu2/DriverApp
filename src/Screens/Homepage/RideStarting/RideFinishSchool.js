@@ -115,14 +115,14 @@ const RideFinishSchool = () => {
           <TouchableOpacity
             style={{
               paddingVertical: 10,
-              backgroundColor: "#8660bf",
+              backgroundColor: "#fbd306",
               paddingHorizontal: 18,
               borderRadius: 30,
               marginTop: 40,
             }}
             onPress={setProfile}
           >
-            <Text style={{ color: "#fff", fontSize: 20 }}>Go Back Home</Text>
+            <Text style={{ color: "#121212", fontSize: 20 }}>Go Back Home</Text>
           </TouchableOpacity>
         </View>
       </View>

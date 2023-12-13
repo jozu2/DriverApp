@@ -19,8 +19,8 @@ const ViewRouteSchool = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const destinationData = {
-    latitude: 14.9978,
-    longitude: 120.656,
+    latitude: 14.997521,
+    longitude: 120.654864,
     description: "Don Honorio Ventura State University",
     title: "DHVSU",
   };

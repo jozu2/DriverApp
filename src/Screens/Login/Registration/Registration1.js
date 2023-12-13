@@ -132,7 +132,7 @@ const Registration1 = () => {
           styles.inputBox,
           { borderColor: errorMobile ? "red" : "#121212" },
         ]}
-        placeholder="Mobile Number (0918 *** ****)"
+        placeholder="Mobile Number "
         defaultValue={mobile}
         onChangeText={(mobile) => setMobile(mobile)}
         keyboardType="number-pad"
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   loginBtn: {
-    backgroundColor: "#8660bf",
+    backgroundColor: "#1e1f22",
     width: "90%",
     paddingVertical: 8,
     marginVertical: 30,

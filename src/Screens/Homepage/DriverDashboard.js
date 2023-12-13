@@ -16,8 +16,6 @@ const DriverDashboard = () => {
   const [fetchedDataToSchool, setFetchedDataToSchool] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hideCreateRideBtn, setHideCreateRideBtn] = useState(false);
-  console.log("yyyy", fetchedData);
-  console.log("xxxx", fetchedDataToSchool);
   useEffect(() => {
     const dbRef = ref(db, `POSTED_RIDES/${driverProfile.id}`);
 

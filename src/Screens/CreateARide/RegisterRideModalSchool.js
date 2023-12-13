@@ -113,7 +113,7 @@ const RegisterRideModalSchool = () => {
           <TouchableOpacity
             style={[
               styles.inputText,
-              { backgroundColor: "#fff", paddingVertical: 10 },
+              { backgroundColor: "#1e1f22", paddingVertical: 10 },
             ]}
             onPress={() => {
               navigation.navigate("SetDestinationToSchool");
@@ -123,7 +123,7 @@ const RegisterRideModalSchool = () => {
               style={{
                 fontSize: 16,
                 alignSelf: "center",
-                color: "black",
+                color: "#fff",
                 textAlign: "center",
               }}
             >
@@ -352,8 +352,8 @@ const RegisterRideModalSchool = () => {
 
                         waypoints: waypoints,
                         destination: {
-                          latitude: 14.9978,
-                          longitude: 120.656,
+                          latitude: 14.997521,
+                          longitude: 120.654864,
                           description: "Don Honorio Ventura State University",
                           title: "DHVSU",
                         },
